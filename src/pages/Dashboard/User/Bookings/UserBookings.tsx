@@ -31,7 +31,7 @@ import {
   useGetBookingsByUserQuery,
 } from "@/redux/features/order/orderApi";
 import { useAppSelector } from "@/redux/hook";
-import { TBooking } from "@/types/TBooking";
+import { TBooking } from "@/types/TProduct";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { formatDate } from "@/utils/formatDate";
 import { MoreHorizontal } from "lucide-react";

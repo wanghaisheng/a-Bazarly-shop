@@ -2,12 +2,6 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import MainLayout from "@/components/layout/MainLayout";
 import AboutUs from "@/pages/AboutUs/AboutUs";
 import ContactUs from "@/pages/ContactUs/ContactUs";
-import AddAdmin from "@/pages/Dashboard/Admin/Admins/AddAdmin";
-import AdminBookings from "@/pages/Dashboard/Admin/Bookings/AdminBookings";
-import AddFacility from "@/pages/Dashboard/Admin/Facilities/AddFacility";
-import AdminFacilities from "@/pages/Dashboard/Admin/Facilities/Facilities";
-import Dashboard from "@/pages/Dashboard/Shared/Dashboard";
-import UserBookings from "@/pages/Dashboard/User/Bookings/UserBookings";
 import Facilities from "@/pages/Facilities/Facilities";
 import FacilityDetails from "@/pages/FacilityDetails/FacilityDetails";
 import Home from "@/pages/Home/Home";
@@ -31,14 +25,14 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-      {
-        path: "/facilities",
-        element: <Facilities />,
-      },
-      {
-        path: "/facilities/:id",
-        element: <FacilityDetails />,
-      },
+      // {
+      //   path: "/facilities",
+      //   element: <Facilities />,
+      // },
+      // {
+      //   path: "/facilities/:id",
+      //   element: <FacilityDetails />,
+      // },
       {
         path: "/payment/success/:id",
         element: (
@@ -85,50 +79,50 @@ const router = createBrowserRouter([
       </PrivateRoutes>
     ),
     children: [
-      {
-        path: "index",
-        element: <Dashboard />,
-      },
-      {
-        path: "my-bookings",
-        element: (
-          <ProtectedRoutes role="user">
-            <UserBookings />
-          </ProtectedRoutes>
-        ),
-      },
-      {
-        path: "bookings",
-        element: (
-          <ProtectedRoutes role="admin">
-            <AdminBookings />
-          </ProtectedRoutes>
-        ),
-      },
-      {
-        path: "facilities",
-        element: (
-          <ProtectedRoutes role="admin">
-            <AdminFacilities />
-          </ProtectedRoutes>
-        ),
-      },
-      {
-        path: "add-facility",
-        element: (
-          <ProtectedRoutes role="admin">
-            <AddFacility />
-          </ProtectedRoutes>
-        ),
-      },
-      {
-        path: "add-admin",
-        element: (
-          <ProtectedRoutes role="admin">
-            <AddAdmin />
-          </ProtectedRoutes>
-        ),
-      },
+      // {
+      //   path: "index",
+      //   element: <Dashboard />,
+      // },
+      // {
+      //   path: "my-bookings",
+      //   element: (
+      //     <ProtectedRoutes role="user">
+      //       <UserBookings />
+      //     </ProtectedRoutes>
+      //   ),
+      // },
+      // {
+      //   path: "bookings",
+      //   element: (
+      //     <ProtectedRoutes role="admin">
+      //       <AdminBookings />
+      //     </ProtectedRoutes>
+      //   ),
+      // },
+      // {
+      //   path: "facilities",
+      //   element: (
+      //     <ProtectedRoutes role="admin">
+      //       <AdminFacilities />
+      //     </ProtectedRoutes>
+      //   ),
+      // },
+      // {
+      //   path: "add-facility",
+      //   element: (
+      //     <ProtectedRoutes role="admin">
+      //       <AddFacility />
+      //     </ProtectedRoutes>
+      //   ),
+      // },
+      // {
+      //   path: "add-admin",
+      //   element: (
+      //     <ProtectedRoutes role="admin">
+      //       <AddAdmin />
+      //     </ProtectedRoutes>
+      //   ),
+      // },
     ],
   },
 ]);

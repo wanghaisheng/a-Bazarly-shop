@@ -9,7 +9,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useDeleteFacilityMutation } from "@/redux/features/facility/facilityApi";
+import { useDeleteFacilityMutation } from "@/redux/features/product/productApi";
 import { toast } from "sonner";
 
 const DeleteFacilityModal = ({ facilityId }: { facilityId: string }) => {

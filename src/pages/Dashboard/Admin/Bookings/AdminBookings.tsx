@@ -23,9 +23,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetAllBookingsQuery } from "@/redux/features/order/orderApi";
 
-import { TBooking } from "@/types/TBooking";
+import { TBooking } from "@/types/TProduct";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { MoreHorizontal } from "lucide-react";
 

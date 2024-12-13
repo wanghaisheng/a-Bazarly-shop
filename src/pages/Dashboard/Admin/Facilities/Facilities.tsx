@@ -28,7 +28,7 @@ import {
 import { File, ListFilter, MoreHorizontal, PlusCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { roundNumber } from "@/utils/roundNumber";
-import { useGetAllFacilitiesQuery } from "@/redux/features/facility/facilityApi";
+import { useGetAllFacilitiesQuery } from "@/redux/features/product/productApi";
 import { TFacility } from "@/types/TFacility";
 import UpdateFacilityModal from "./UpdateFacilityModal";
 import DeleteFacilityModal from "./DeleteFacilityModal";

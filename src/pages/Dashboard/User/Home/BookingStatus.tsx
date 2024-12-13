@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { selectCurrentUser } from "@/redux/features/auth/AuthSlice";
 import { useGetBookingsByUserQuery } from "@/redux/features/order/orderApi";
 import { useAppSelector } from "@/redux/hook";
-import { TBooking } from "@/types/TBooking";
+import { TBooking } from "@/types/TProduct";
 import { formatDate } from "@/utils/formatDate";
 import getPreviousDate from "@/utils/getPreviousDate";
 import { ClockArrowDown, ClockArrowUp, ShieldCheck } from "lucide-react";

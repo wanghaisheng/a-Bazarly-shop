@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import Container from "@/components/shared/Container";
-import { useGetAllFacilitiesQuery } from "@/redux/features/facility/facilityApi";
+import { useGetAllFacilitiesQuery } from "@/redux/features/product/productApi";
 import { TFacility } from "@/types/TFacility";
 import FacilityCard from "./FacilitiesUtils/FacilityCard";
 import { Skeleton } from "@/components/ui/skeleton";

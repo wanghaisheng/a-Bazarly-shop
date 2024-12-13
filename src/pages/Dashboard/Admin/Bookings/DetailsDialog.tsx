@@ -14,7 +14,7 @@ import {
   TableCell,
   TableRow,
 } from "@/components/ui/table";
-import { TBooking } from "@/types/TBooking";
+import { TBooking } from "@/types/TProduct";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { roundNumber } from "@/utils/roundNumber";
 

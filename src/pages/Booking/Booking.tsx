@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCreateBookingMutation } from "@/redux/features/order/orderApi";
 import { useCheckAvailabilityQuery } from "@/redux/features/checkAvailability/checkAvailablityApi";
-import { useGetSingleFacilityQuery } from "@/redux/features/facility/facilityApi";
+import { useGetSingleFacilityQuery } from "@/redux/features/product/productApi";
 import { TFacility } from "@/types/TFacility";
 import { TSlot } from "@/types/TSlot";
 import { formatDate } from "@/utils/formatDate";

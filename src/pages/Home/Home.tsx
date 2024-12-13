@@ -1,5 +1,5 @@
 import BannerSection from "./BannerSection";
-import FeaturedFacilities from "./FeaturedFacilities/FeaturedFacilities";
+import FeaturedFacilities from "./FeaturedProducts/FeaturedProducts";
 import Footer from "./Footer/Footer";
 import HowItWorksSection from "./HowItWorks/HowItWorksSection";
 import PartnersSection from "./PartnersSection/PartnersSection";

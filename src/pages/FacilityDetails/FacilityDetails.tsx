@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useGetSingleFacilityQuery } from "@/redux/features/facility/facilityApi";
+import { useGetSingleFacilityQuery } from "@/redux/features/product/productApi";
 import { TFacility } from "@/types/TFacility";
 import { BookmarkPlus, Loader2, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
