@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useCreateBookingMutation } from "@/redux/features/booking/bookingApi";
+import { useCreateBookingMutation } from "@/redux/features/order/orderApi";
 import { useCheckAvailabilityQuery } from "@/redux/features/checkAvailability/checkAvailablityApi";
 import { useGetSingleFacilityQuery } from "@/redux/features/facility/facilityApi";
 import { TFacility } from "@/types/TFacility";

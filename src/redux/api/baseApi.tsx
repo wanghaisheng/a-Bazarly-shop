@@ -17,6 +17,13 @@ export const baseApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Bookings", "Facilities", "Admins"],
+  tagTypes: [
+    "Products",
+    "Orders",
+    "Admins",
+    "Vendors",
+    "Customers",
+    "Payments",
+  ],
   endpoints: () => ({}),
 });

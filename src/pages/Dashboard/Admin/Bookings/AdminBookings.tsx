@@ -23,7 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetAllBookingsQuery } from "@/redux/features/booking/bookingApi";
+import { useGetAllBookingsQuery } from "@/redux/features/order/orderApi";
 
 import { TBooking } from "@/types/TBooking";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";

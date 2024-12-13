@@ -29,7 +29,7 @@ import { selectCurrentUser } from "@/redux/features/auth/AuthSlice";
 import {
   useCancelBookingMutation,
   useGetBookingsByUserQuery,
-} from "@/redux/features/booking/bookingApi";
+} from "@/redux/features/order/orderApi";
 import { useAppSelector } from "@/redux/hook";
 import { TBooking } from "@/types/TBooking";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { selectCurrentUser } from "@/redux/features/auth/AuthSlice";
-import { useGetBookingsByUserQuery } from "@/redux/features/booking/bookingApi";
+import { useGetBookingsByUserQuery } from "@/redux/features/order/orderApi";
 import { useAppSelector } from "@/redux/hook";
 import { TBooking } from "@/types/TBooking";
 import { formatDate } from "@/utils/formatDate";
