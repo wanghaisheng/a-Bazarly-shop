@@ -4,7 +4,7 @@ export interface IProductQueryParams
   category?: string;
   limit?: number;
   sortBy?: string;
-  sortOrder?: "asc" | "desc";
+  sortOrder?: string;
   minPrice?: number;
   maxPrice?: number;
   shopId?: string;
