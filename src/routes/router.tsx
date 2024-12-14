@@ -2,8 +2,6 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import MainLayout from "@/components/layout/MainLayout";
 import AboutUs from "@/pages/AboutUs/AboutUs";
 import ContactUs from "@/pages/ContactUs/ContactUs";
-import Facilities from "@/pages/Facilities/Facilities";
-import FacilityDetails from "@/pages/FacilityDetails/FacilityDetails";
 import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login/Login";
 import PaymentFail from "@/pages/Payment/PaymentFail";
@@ -14,6 +12,7 @@ import Error404Page from "@/pages/Error/Error404Page";
 import UnauthorizedAccess from "@/pages/Error/UnauthorizedAccess";
 import ProtectedRoutes from "./ProtectedRoutes";
 import PrivateRoutes from "./PrivateRoutes";
+import AllProducts from "@/pages/Products/Products";
 
 const router = createBrowserRouter([
   {
@@ -25,10 +24,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-      // {
-      //   path: "/facilities",
-      //   element: <Facilities />,
-      // },
+      {
+        path: "/products",
+        element: <AllProducts />,
+      },
       // {
       //   path: "/facilities/:id",
       //   element: <FacilityDetails />,
