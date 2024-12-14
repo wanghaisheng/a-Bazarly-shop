@@ -1,13 +1,14 @@
 export interface IProductQueryParams
   extends Record<string, string | number | undefined> {
   searchTerm?: string;
-  limit?: number;
-  sortBy?: string;
-  sortOrder?: string;
+  category?: string;
   minPrice?: number;
   maxPrice?: number;
   shopId?: string;
   userEmail?: string;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: string;
 }
 
 export interface ICategoryQueryParams

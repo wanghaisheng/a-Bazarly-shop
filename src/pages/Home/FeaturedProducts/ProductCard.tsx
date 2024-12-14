@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { id, name, image, price, discount } = product;
-  console.log(product);
+
   return (
     <Card className="border-none shadow-sm group">
       <Link to={`/products/${id}`}>

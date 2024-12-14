@@ -15,6 +15,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
+import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
+import { TCategory } from "@/types/TCategory";
 
 const FeaturedProducts = () => {
   const [search, setSearch] = useState("");
@@ -23,8 +25,11 @@ const FeaturedProducts = () => {
   const [maxPrice, setMaxPrice] = useState(99999999999999);
   const [sort, setSort] = useState("asc");
 
-  const { data, isFetching } = useGetAllProductsQuery({
+  const { data: categories } = useGetAllCategoriesQuery({});
+
+  const { data, isFetching, refetch } = useGetAllProductsQuery({
     searchTerm: search,
+    category,
     sortBy: "price",
     sortOrder: sort,
     minPrice,
@@ -64,15 +69,15 @@ const FeaturedProducts = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      {/* {categories?.data.map((item: any) => (
-                          <SelectItem key={item._id} value={item?.category}>
-                            {item?.category}
-                          </SelectItem>
-                        ))} */}
+                      {categories?.data.map((item: TCategory) => (
+                        <SelectItem key={item.id} value={item?.name}>
+                          {item?.name}
+                        </SelectItem>
+                      ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-                <Button type="submit" variant={"default"}>
+                <Button onClick={refetch} type="submit" variant={"default"}>
                   <Search />
                 </Button>
               </div>
