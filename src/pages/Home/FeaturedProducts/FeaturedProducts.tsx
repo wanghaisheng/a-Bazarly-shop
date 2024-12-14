@@ -17,6 +17,7 @@ import {
 import { useState } from "react";
 import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
 import { TCategory } from "@/types/TCategory";
+import SectionHeader from "@/components/shared/sectionHeader";
 
 const FeaturedProducts = () => {
   const [search, setSearch] = useState("");
@@ -41,15 +42,12 @@ const FeaturedProducts = () => {
     <div className="py-16 lg:py-24 bg-slate-50">
       <Container>
         <div className="space-y-8">
-          <div>
-            {/* section header */}
-            <h1 className="text-slate-900 text-3xl md:text-4xl font-extrabold mb-4 text-center">
-              Featured Products
-            </h1>
-            <p className="text-slate-600 text-lg md:text-xl font-medium text-center">
-              Shop the latest trends and unbeatable deals today!
-            </p>
-          </div>
+          {/* section header */}
+          <SectionHeader
+            heading="Featured Products"
+            subHeading="Shop the latest trends and unbeatable deals today!"
+          />
+
           {/* Search space */}
           <div className="flex justify-center items-center">
             <div
@@ -86,7 +84,7 @@ const FeaturedProducts = () => {
         </div>
 
         {/* price range and sorting */}
-        <div className="flex flex-wrap justify-between items-center my-6 mt-10">
+        <div className="flex flex-wrap justify-center lg:justify-between items-center gap-2 my-6 mt-10">
           <div className="flex items-center gap-2">
             <Input
               onChange={(e) => setMinPrice(Number(e.target.value))}
