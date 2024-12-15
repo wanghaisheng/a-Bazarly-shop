@@ -16,6 +16,7 @@ import AllProducts from "@/pages/Products/Products";
 import ProductDetails from "@/pages/ProductDetails/ProductDetails";
 import Shop from "@/pages/Shop/Shop";
 import Cart from "@/pages/Cart/Cart";
+import Checkout from "@/pages/Checkout/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
       },
       {
         path: "/payment/success/:id",
