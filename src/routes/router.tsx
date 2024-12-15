@@ -13,6 +13,7 @@ import UnauthorizedAccess from "@/pages/Error/UnauthorizedAccess";
 import ProtectedRoutes from "./ProtectedRoutes";
 import PrivateRoutes from "./PrivateRoutes";
 import AllProducts from "@/pages/Products/Products";
+import ProductDetails from "@/pages/ProductDetails/ProductDetails";
 
 const router = createBrowserRouter([
   {
@@ -28,10 +29,10 @@ const router = createBrowserRouter([
         path: "/products",
         element: <AllProducts />,
       },
-      // {
-      //   path: "/facilities/:id",
-      //   element: <FacilityDetails />,
-      // },
+      {
+        path: "/products/:id",
+        element: <ProductDetails />,
+      },
       {
         path: "/payment/success/:id",
         element: (

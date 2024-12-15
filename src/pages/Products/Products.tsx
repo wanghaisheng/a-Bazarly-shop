@@ -18,6 +18,7 @@ import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi"
 import { TCategory } from "@/types/TCategory";
 import ProductCard from "./ProductUtils/ProductCard";
 import SectionHeader from "@/components/shared/sectionHeader";
+import { useSearchParams } from "react-router-dom";
 
 const AllProducts = () => {
   const [search, setSearch] = useState("");
@@ -25,6 +26,13 @@ const AllProducts = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(99999999999999);
   const [sort, setSort] = useState("asc");
+
+  // filter by category if specified
+  const [params] = useSearchParams();
+  const categoryQuery = params.get("category");
+  if (categoryQuery && !category) {
+    setCategory(categoryQuery as string);
+  }
 
   const { data: categories } = useGetAllCategoriesQuery({});
 
@@ -39,7 +47,7 @@ const AllProducts = () => {
   const products = data?.data;
 
   return (
-    <div className="py-16 lg:py-24 bg-slate-50">
+    <div className="py-16 lg:py-20 bg-slate-50">
       <Container>
         <div className="space-y-8">
           {/* section header */}

@@ -1,5 +1,5 @@
 import Container from "@/components/shared/Container";
-import SectionHeader from "@/components/shared/sectionHeader";
+import SectionHeading from "@/components/shared/sectionHeader";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
 import { TCategory } from "@/types/TCategory";
@@ -13,7 +13,7 @@ const CategoriesSection = () => {
     <div>
       <Container>
         {/* header */}
-        <SectionHeader
+        <SectionHeading
           heading="Featured Category"
           subHeading="Get Your Desired Product from Featured Category!"
         />
@@ -22,7 +22,7 @@ const CategoriesSection = () => {
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 my-14">
             {categories?.map((item: TCategory) => (
               <Link
-                to={`/products?categoryId=${item.id}`}
+                to={`/products?category=${item.name}`}
                 key={item.id}
                 className="flex flex-col items-center gap-2 group cursor-pointer"
               >

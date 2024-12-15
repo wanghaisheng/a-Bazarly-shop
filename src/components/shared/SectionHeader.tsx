@@ -1,4 +1,4 @@
-const SectionHeader = ({
+const SectionHeading = ({
   heading,
   subHeading,
 }: {
@@ -17,4 +17,4 @@ const SectionHeader = ({
   );
 };
 
-export default SectionHeader;
+export default SectionHeading;
