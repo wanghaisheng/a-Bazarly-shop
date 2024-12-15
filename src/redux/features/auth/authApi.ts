@@ -2,15 +2,6 @@ import { baseApi } from "../../api/baseApi";
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    signUp: builder.mutation({
-      query: (payload) => {
-        return {
-          url: `/users/create-customer`,
-          method: "POST",
-          body: payload,
-        };
-      },
-    }),
     login: builder.mutation({
       query: (payload) => {
         return {
@@ -20,7 +11,39 @@ const authApi = baseApi.injectEndpoints({
         };
       },
     }),
+    customerSignUp: builder.mutation({
+      query: (payload) => {
+        return {
+          url: `/users/create-customer`,
+          method: "POST",
+          body: payload,
+        };
+      },
+    }),
+    vendorSignUp: builder.mutation({
+      query: (payload) => {
+        return {
+          url: `/users/create-vendor`,
+          method: "POST",
+          body: payload,
+        };
+      },
+    }),
+    adminSignUp: builder.mutation({
+      query: (payload) => {
+        return {
+          url: `/users/create-admin`,
+          method: "POST",
+          body: payload,
+        };
+      },
+    }),
   }),
 });
 
-export const { useSignUpMutation, useLoginMutation } = authApi;
+export const {
+  useLoginMutation,
+  useCustomerSignUpMutation,
+  useVendorSignUpMutation,
+  useAdminSignUpMutation,
+} = authApi;

@@ -25,8 +25,8 @@ const formValidationSchema = z.object({
   email: z.string().email().min(1, {
     message: "Email must be a valid email address.",
   }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 character",
+  password: z.string().min(6, {
+    message: "Password must be at least 6 character",
   }),
 });
 
@@ -70,9 +70,9 @@ const Login = () => {
   }
 
   return (
-    <div className=" py-14 bg-[url('https://png.pngtree.com/thumb_back/fw800/background/20230901/pngtree-a-group-of-sports-equipment-on-a-surface-image_13169788.jpg')] bg-fixed min-h-screen">
+    <div className=" py-14">
       <Container>
-        <div className="flex w-full justify-center lg:justify-end items-center gap-10">
+        <div className="flex w-full justify-center items-center gap-10">
           {/* Login form */}
           <div className="border rounded-2xl bg-white p-4 md:p-8 w-full md:w-1/2 lg:w-2/5">
             <CardTitle className="mb-8 font-bold text-2xl md:text-3xl text-center">
