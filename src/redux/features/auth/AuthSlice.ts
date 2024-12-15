@@ -12,9 +12,10 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     saveToAuth: (state, action) => {
-      const { token, data } = action.payload;
-      state.user = data;
-      state.accessToken = token;
+      const { data } = action.payload;
+      state.user = data.user;
+      state.accessToken = data?.accessToken;
+      state.refreshToken = data?.refreshToken;
     },
     logOut: () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -30,3 +31,4 @@ export default authSlice.reducer;
 export const selectAuth = (state: RootState) => state.auth;
 export const selectCurrentUser = (state: RootState) => state.auth.user;
 export const selectAccessToken = (state: RootState) => state.auth.accessToken;
+export const selectRefreshToken = (state: RootState) => state.auth.refreshToken;

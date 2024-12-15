@@ -66,10 +66,10 @@ const Navbar = () => {
               Home
             </Link>
             <Link
-              to="/facilities"
+              to="/products"
               className="flex items-center gap-2 rounded-md px-3 py-2 text-base font-medium hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50"
             >
-              Facilities
+              Products
             </Link>
             <Link
               to="/about-us"
@@ -82,12 +82,6 @@ const Navbar = () => {
               className="flex items-center gap-2 rounded-md px-3 py-2 text-base font-medium hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50"
             >
               Contact
-            </Link>
-            <Link
-              to="/blogs"
-              className="flex items-center gap-2 rounded-md px-3 py-2 text-base font-medium hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50"
-            >
-              Blogs
             </Link>
           </nav>
         </SheetContent>
@@ -114,13 +108,13 @@ const Navbar = () => {
             </Link>
           </NavigationMenuLink>
 
-          {/* Facilities */}
+          {/* products */}
           <NavigationMenuLink asChild>
             <Link
-              to="/facilities"
+              to="/products"
               className="inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-base font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50"
             >
-              Facilities
+              Products
             </Link>
           </NavigationMenuLink>
 
@@ -140,16 +134,6 @@ const Navbar = () => {
               className="inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-base font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50"
             >
               Contact
-            </HashLink>
-          </NavigationMenuLink>
-
-          {/* blogs */}
-          <NavigationMenuLink asChild>
-            <HashLink
-              to="/blogs"
-              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-base font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50"
-            >
-              Blogs
             </HashLink>
           </NavigationMenuLink>
         </NavigationMenuList>
