@@ -15,6 +15,7 @@ import PrivateRoutes from "./PrivateRoutes";
 import AllProducts from "@/pages/Products/Products";
 import ProductDetails from "@/pages/ProductDetails/ProductDetails";
 import Shop from "@/pages/Shop/Shop";
+import Cart from "@/pages/Cart/Cart";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/shops/:id",
         element: <Shop />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
       {
         path: "/payment/success/:id",
