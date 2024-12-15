@@ -16,13 +16,13 @@ const Home = () => {
       {/* featured facilities */}
       <FeaturedFacilities />
       {/* How it works */}
-      <HowItWorksSection />
+      {/* <HowItWorksSection /> */}
       {/* Testimonial */}
-      <Testimonial />
+      {/* <Testimonial /> */}
       {/* Our Partners */}
-      <PartnersSection />
+      {/* <PartnersSection /> */}
       {/* Footer section */}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

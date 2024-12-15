@@ -11,27 +11,28 @@ import { CopyPlus, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
-  const { id, name, image, price, discount } = product;
-
+  
   return (
     <Card className="border-none shadow-sm group">
-      <Link to={`/products/${id}`}>
+      <Link to={`/products/${product?.id}`}>
         <CardHeader className="pb-3">
           <img
-            src={image}
+            src={product?.image}
             alt="product-image"
             className="pb-2 object-cover w-full h-72 rounded-lg"
           />
           <CardTitle className="text-lg font-semibold text-zinc-900">
-            {name}
+            {product?.name}
           </CardTitle>
         </CardHeader>
       </Link>
       <CardContent>
         <p className="flex items-center gap-2 font-medium text-slate-950">
-          <span className="text-primary text-lg font-semibold">{price}৳</span>
+          <span className="text-primary text-lg font-semibold">
+            {product?.price}৳
+          </span>
           <span className="text-zinc-500 line-through">
-            {price + discount}৳
+            {product?.price + product?.discount}৳
           </span>
         </p>
       </CardContent>

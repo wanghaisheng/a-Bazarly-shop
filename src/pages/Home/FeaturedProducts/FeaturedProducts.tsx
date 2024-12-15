@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
 import { TCategory } from "@/types/TCategory";
 import SectionHeader from "@/components/shared/sectionHeader";
@@ -25,6 +25,10 @@ const FeaturedProducts = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(99999999999999);
   const [sort, setSort] = useState("asc");
+  const [page, setPage] = useState(1); // Current page
+  const limit = 4; // Items per page
+
+  const observer = useRef<IntersectionObserver | null>(null);
 
   const { data: categories } = useGetAllCategoriesQuery({});
 
@@ -34,9 +38,42 @@ const FeaturedProducts = () => {
     sortBy: "price",
     sortOrder: sort,
     minPrice,
-    maxPrice: maxPrice || 99999999999999,
+    maxPrice: maxPrice || 999999,
+    page,
+    limit,
   });
-  const products = data?.data;
+
+  // Concatenate fetched data
+  const [products, setProducts] = useState<IProduct[]>([]);
+
+  // Update products when API data changes
+  useEffect(() => {
+    if (data?.data) {
+      setProducts((prev) => [...prev, ...data.data]);
+    }
+  }, [data?.data]);
+
+  // Implementation of infinite scrolling
+  const lastElementRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (isFetching) return;
+
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        // Check if the last item is visible and whether more data exists
+        if (
+          entries[0].isIntersecting &&
+          products.length < (data?.meta?.total || 0)
+        ) {
+          setPage((prevPage) => prevPage + 1); // Load the next page
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [isFetching, products, data]
+  );
 
   return (
     <div className="py-16 lg:py-24 bg-slate-50">
@@ -116,7 +153,21 @@ const FeaturedProducts = () => {
         </div>
 
         {/* data mapping */}
-        {isFetching ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+          {products?.map((product: IProduct, index: number) => {
+            if (products?.length === index + 1) {
+              return (
+                <div key={index} ref={lastElementRef}>
+                  <ProductCard product={product} />
+                </div>
+              );
+            } else {
+              return <ProductCard key={index} product={product} />;
+            }
+          })}
+        </div>
+        {/* skeleton */}
+        {isFetching && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-6 justify-between items-center mb-16">
             {Array.from({ length: 8 }).map((_, index) => (
               <div key={index} className="space-y-4">
@@ -130,13 +181,9 @@ const FeaturedProducts = () => {
               </div>
             ))}
           </div>
-        ) : products?.length ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
-            {products?.map((item: IProduct) => (
-              <ProductCard key={item?.id} product={item} />
-            ))}
-          </div>
-        ) : (
+        )}
+        {/* not found */}
+        {products?.length < 1 && (
           <h1 className="text-center text-lg text-gray-500 my-10">
             No Data Found
           </h1>
