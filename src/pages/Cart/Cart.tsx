@@ -16,14 +16,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { selectCart } from "@/redux/features/cart/cartSlice";
-import { useAppSelector } from "@/redux/hook";
+import { removeFromCart, selectCart } from "@/redux/features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { calculation } from "@/utils/calculation";
+import { XIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
   const cartData = useAppSelector(selectCart);
-  console.log(cartData);
+  const dispatch = useAppDispatch();
   const { subTotal, shipping, total } = calculation(cartData);
   return (
     <Container>
@@ -50,10 +51,20 @@ const Cart = () => {
                     <img src={item?.product?.image} alt="product" />
                   </TableCell>
                   <TableCell>{item?.product?.name}</TableCell>
-                  <TableCell>${item?.product?.price}</TableCell>
+                  <TableCell>৳{item?.product?.price}</TableCell>
                   <TableCell>{item?.quantity}</TableCell>
                   <TableCell>
-                    ${item?.quantity * item?.product?.price}
+                    ৳{item?.quantity * item?.product?.price}
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      onClick={() => dispatch(removeFromCart(item))}
+                      variant={"ghost"}
+                      size={"icon"}
+                      className="hover:text-red-500"
+                    >
+                      <XIcon size={16} />
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -63,17 +74,17 @@ const Cart = () => {
         <div className="w-full md:w-4/12">
           <Card className="p-4 py-6 rounded-xl">
             <CardHeader>
-              <CardTitle className="font-bold text-3xl">Cart Total</CardTitle>
+              <CardTitle className="font-bold text-2xl">Cart Total</CardTitle>
             </CardHeader>
             <CardContent>
               <h3 className="flex justify-between font-bold mb-8">
-                Subtotal <span>${subTotal}</span>
+                Subtotal <span>৳{subTotal}</span>
               </h3>
               <h3 className="flex justify-between font-bold mb-8">
-                Shipping <span>${shipping}</span>
+                Shipping <span>৳{shipping}</span>
               </h3>
               <h3 className="flex justify-between font-bold mb-8">
-                Total <span>${total}</span>
+                Total <span>৳{total}</span>
               </h3>
             </CardContent>
             <CardFooter className="flex justify-between">
@@ -82,7 +93,7 @@ const Cart = () => {
                   disabled={cartData.length < 1}
                   className="w-full text-base py-6 rounded-full"
                 >
-                  CHECKOUT
+                  Checkout
                 </Button>
               </Link>
             </CardFooter>

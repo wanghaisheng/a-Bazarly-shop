@@ -23,11 +23,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import RelatedProductCard from "./ProductDetailsUtils/RelatedProductCard";
-import { useAppSelector } from "@/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { selectCurrentUser } from "@/redux/features/auth/AuthSlice";
 import ReviewCard from "./ProductDetailsUtils/ReviewCard";
 import { Rating } from "primereact/rating";
 import { useGetProductReviewQuery } from "@/redux/features/review/reviewApi";
+import { addToCart } from "@/redux/features/cart/cartSlice";
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
@@ -54,6 +55,17 @@ const ProductDetails = () => {
   const price = product?.price;
   const totalPrice = price + product?.discount;
   const discountParcent = (product?.discount / totalPrice) * 100;
+
+  const dispatch = useAppDispatch();
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        product,
+        quantity,
+        price,
+      })
+    );
+  };
 
   return (
     <div>
@@ -152,7 +164,7 @@ const ProductDetails = () => {
                     {/* Add To cart button */}
                     <Button
                       disabled={product?.quantity < 1}
-                      // onClick={handleAddToCart}
+                      onClick={handleAddToCart}
                       className="text-base flex items-center gap-2 py-6 md:p-7 rounded-full"
                     >
                       <ShoppingCart className="size-6" /> Add To Cart

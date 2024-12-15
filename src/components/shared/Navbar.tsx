@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
-import { MenuIcon, User } from "lucide-react";
+import { MenuIcon, ShoppingCart, User } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuLink,
@@ -21,9 +21,12 @@ import {
 } from "../ui/dropdown-menu";
 import { useAppDispatch } from "@/redux/hook";
 import user_photo from "../../assets/icons/user.png";
+import { selectCart } from "@/redux/features/cart/cartSlice";
+import { Badge } from "../ui/badge";
 
 const Navbar = () => {
   const user = useSelector(selectAuth);
+  const cart = useSelector(selectCart);
   const dispatch = useAppDispatch();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -144,68 +147,86 @@ const Navbar = () => {
         <span className="text-primary">Bazarly</span>
       </h1>
 
-      {user.accessToken ? (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            {user?.user ? (
-              <Button
-                variant="outline"
-                className="overflow-hidden rounded-full size-10 p-0 hover:border-primary"
+      <div className="flex items-center gap-4">
+        <Link to={"/cart"} className="">
+          <Button
+            variant={"outline"}
+            className="text-base border-2 border-primary text-primary relative"
+          >
+            <ShoppingCart />
+            {cart.length > 0 && (
+              <Badge
+                variant="secondary"
+                className="absolute -top-3 -left-2 rounded-full bg-primary px-2"
               >
-                <img
-                  src={user_photo}
-                  className="overflow-hidden rounded-full"
-                />
-              </Button>
-            ) : (
-              <Button
-                variant="outline"
-                className="overflow-hidden rounded-full size-10 p-2"
-              >
-                <User size={24} className="overflow-hidden rounded-full" />
-              </Button>
+                {cart.length}
+              </Badge>
             )}
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>
-              <p>{user?.user?.name}</p>
-              <p className="font-normal text-xs text-zinc-600">
-                {user?.user?.email}
-              </p>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <Link to={"/dashboard/index"}>
-              <DropdownMenuItem className="cursor-pointer">
-                Dashboard
+          </Button>
+        </Link>
+        {user.accessToken ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              {user?.user ? (
+                <Button
+                  variant="outline"
+                  className="overflow-hidden rounded-full size-10 p-0 hover:border-primary"
+                >
+                  <img
+                    src={user_photo}
+                    className="overflow-hidden rounded-full"
+                  />
+                </Button>
+              ) : (
+                <Button
+                  variant="outline"
+                  className="overflow-hidden rounded-full size-10 p-2"
+                >
+                  <User size={24} className="overflow-hidden rounded-full" />
+                </Button>
+              )}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>
+                <p>{user?.user?.name}</p>
+                <p className="font-normal text-xs text-zinc-600">
+                  {user?.user?.email}
+                </p>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <Link to={"/dashboard/index"}>
+                <DropdownMenuItem className="cursor-pointer">
+                  Dashboard
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => dispatch(logOut())}
+                className="text-destructive cursor-pointer"
+              >
+                Logout
               </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <div className="flex items-center gap-1">
+            {/* <Link to={"/sign-up"} className="hidden lg:block">
+              <Button
+                variant={"ghost"}
+                className="text-base relative flex items-center gap-2"
+              >
+                Sign up
+              </Button>
+            </Link> */}
+            <Link to={"/login"}>
+              <Button className="text-base relative flex items-center gap-2">
+                Login
+              </Button>
             </Link>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => dispatch(logOut())}
-              className="text-destructive cursor-pointer"
-            >
-              Logout
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      ) : (
-        <div className="flex items-center gap-1">
-          <Link to={"/sign-up"} className="hidden lg:block">
-            <Button
-              variant={"ghost"}
-              className="text-base relative flex items-center gap-2"
-            >
-              Sign up
-            </Button>
-          </Link>
-          <Link to={"/login"}>
-            <Button className="text-base relative flex items-center gap-2">
-              Login
-            </Button>
-          </Link>
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </header>
   );
 };
