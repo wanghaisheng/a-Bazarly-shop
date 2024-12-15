@@ -37,7 +37,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="flex h-16 md:h-20 w-full shrink-0 justify-between items-center px-4 md:px-6 shadow-sm lg:shadow-none sticky z-50 backdrop-blur-3xl bg-white/50">
+    <header className="flex h-16 md:h-20 w-full shrink-0 justify-between items-center px-4 md:px-6 shadow-sm lg:shadow-none sticky top-0 z-50 backdrop-blur-3xl bg-white/50">
       {/* sidebar for small screen */}
       <Sheet>
         <SheetTrigger asChild>

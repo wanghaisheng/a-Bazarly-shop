@@ -14,6 +14,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import PrivateRoutes from "./PrivateRoutes";
 import AllProducts from "@/pages/Products/Products";
 import ProductDetails from "@/pages/ProductDetails/ProductDetails";
+import Shop from "@/pages/Shop/Shop";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/products/:id",
         element: <ProductDetails />,
+      },
+      {
+        path: "/shops/:id",
+        element: <Shop />,
       },
       {
         path: "/payment/success/:id",

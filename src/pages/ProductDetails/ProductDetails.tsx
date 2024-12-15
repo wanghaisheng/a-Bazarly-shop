@@ -26,6 +26,8 @@ import RelatedProductCard from "./ProductDetailsUtils/RelatedProductCard";
 import { useAppSelector } from "@/redux/hook";
 import { selectCurrentUser } from "@/redux/features/auth/AuthSlice";
 import ReviewCard from "./ProductDetailsUtils/ReviewCard";
+import { Rating } from "primereact/rating";
+import { useGetProductReviewQuery } from "@/redux/features/review/reviewApi";
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
@@ -40,6 +42,7 @@ const ProductDetails = () => {
     userEmail: user?.email,
   });
   const product = data?.data;
+  const { data: reviewData } = useGetProductReviewQuery({ productId: id });
 
   const { data: relatedProductsData } = useGetAllProductsQuery({
     category: product?.category?.name,
@@ -62,10 +65,10 @@ const ProductDetails = () => {
         <div>
           {/* product and delivery section */}
           <Container>
-            <section className="flex flex-col md:flex-row justify-between gap-10 my-12">
+            <section className="flex flex-col lg:flex-row justify-between gap-10 my-12">
               <div className="flex flex-col md:flex-row gap-10">
                 {/* image */}
-                <div className="md:max-w-xs lg:max-w-sm xl:max-w-md">
+                <div className="w-full max-w-sm">
                   <img
                     src={product?.image}
                     alt="product-image"
@@ -77,10 +80,20 @@ const ProductDetails = () => {
                   <h1 className="text-xl md:text-2xl font-bold mb-2">
                     {product?.name}
                   </h1>
-                  <h3 className="md:text-lg font-semibold mb-4">
+                  {/* category */}
+                  <h3 className="md:text-lg font-semibold mb-2">
                     <span className="font-bold">Category:</span>{" "}
                     {product?.category?.name}
                   </h3>
+                  {/* rating */}
+                  <div>
+                    <Rating
+                      value={reviewData?.data?.rating}
+                      cancel={false}
+                      readOnly
+                      className="flex gap-1 text-amber-500 mb-4"
+                    />
+                  </div>
                   {/* stock status */}
                   <div
                     className={`w-fit p-2 px-4 ${
@@ -148,7 +161,7 @@ const ProductDetails = () => {
                 </div>
               </div>
               {/* delivery information */}
-              <div className="border p-4 w-full lg:w-fit rounded-lg">
+              <div className="max-h-fit border p-4 w-full lg:w-fit rounded-lg">
                 <div>
                   <h3 className="text-sm font-bold">Delivery Options</h3>
                   <div className="flex justify-between items-center gap-12 py-3">
@@ -199,7 +212,10 @@ const ProductDetails = () => {
                     <div className="flex gap-3 items-center">
                       <Store className="text-zinc-500" />
                       <div>
-                        <Link to={""} className="font-bold hover:text-primary">
+                        <Link
+                          to={`/shops/${product?.shop?.id}`}
+                          className="font-bold hover:text-primary"
+                        >
                           {product?.shop?.name}
                         </Link>
                       </div>
@@ -226,7 +242,7 @@ const ProductDetails = () => {
                     <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
                       <div>
                         <h1 className="text-xl font-bold">
-                          Reviews ({product?._count?.review})
+                          Reviews ({reviewData?.data?.reviews?.length})
                         </h1>
                         <p className="text-zinc-700">
                           Get specific details about this product from customers
@@ -241,9 +257,9 @@ const ProductDetails = () => {
                       </Button>
                     </div>
                     <div>
-                      {product?.review?.length > 0 ? (
-                        product?.review?.map((review: any) => (
-                          <ReviewCard review={review} />
+                      {reviewData?.data?.reviews?.length > 0 ? (
+                        reviewData?.data?.reviews?.map((review: any) => (
+                          <ReviewCard review={review} key={review?.id} />
                         ))
                       ) : (
                         <p className="text-center text-zinc-600 py-4">
