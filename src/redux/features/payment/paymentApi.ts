@@ -1,14 +1,26 @@
 import { baseApi } from "../../api/baseApi";
 
-const facilityApi = baseApi.injectEndpoints({
+const paymentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getBookingByTrxID: builder.query({
+    createPayment: builder.mutation({
+      query: (payload) => {
+        return {
+          url: `/payments/create`,
+          method: "POST",
+          body: payload,
+        };
+      },
+      invalidatesTags: ["Payments"],
+    }),
+    getSinglePayment: builder.query({
       query: (id) => ({
-        url: `/payment/${id}`,
+        url: `/payments/${id}`,
         method: "GET",
       }),
+      providesTags: ["Payments"],
     }),
   }),
 });
 
-export const { useGetBookingByTrxIDQuery } = facilityApi;
+export const { useCreatePaymentMutation, useGetSinglePaymentQuery } =
+  paymentApi;

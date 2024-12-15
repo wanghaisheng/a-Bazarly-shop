@@ -17,7 +17,7 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
 import { TCategory } from "@/types/TCategory";
-import SectionHeader from "@/components/shared/sectionHeader";
+// import SectionHeader from "@/components/shared/sectionHeader";
 import { useAppSelector } from "@/redux/hook";
 import { selectCurrentUser } from "@/redux/features/auth/AuthSlice";
 
@@ -85,10 +85,10 @@ const FeaturedProducts = () => {
       <Container>
         <div className="space-y-8">
           {/* section header */}
-          <SectionHeader
+          {/* <SectionHeader
             heading="Featured Products"
             subHeading="Shop the latest trends and unbeatable deals today!"
-          />
+          /> */}
 
           {/* Search space */}
           <div className="flex justify-center items-center">

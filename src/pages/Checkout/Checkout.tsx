@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Container from "@/components/shared/Container";
 import { Button } from "@/components/ui/button";
 import { CardTitle } from "@/components/ui/card";
@@ -12,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { useAppSelector } from "@/redux/hook";
 import { calculation } from "@/utils/calculation";
 import { XIcon } from "lucide-react";
 import { useState } from "react";
@@ -28,10 +29,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { resetCart, selectCart } from "@/redux/features/cart/cartSlice";
+import { selectCart } from "@/redux/features/cart/cartSlice";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCreateOrderMutation } from "@/redux/features/order/orderApi";
 import { useGetProfileQuery } from "@/redux/features/profile/profileApi";
+import { useCreatePaymentMutation } from "@/redux/features/payment/paymentApi";
 
 // form validation shema
 const formValidationSchema = z.object({
@@ -58,8 +60,9 @@ const Checkout = () => {
   const cartData = useAppSelector(selectCart);
   const shopId = cartData[0]?.product?.shopId;
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const [createOrder] = useCreateOrderMutation();
+  const [createPayment] = useCreatePaymentMutation();
 
   const { subTotal, shipping, total } = calculation(cartData);
 
@@ -83,7 +86,7 @@ const Checkout = () => {
 
   // submit order handler
   async function handlePlaceOrder(
-    values: z.infer<typeof formValidationSchema>
+    _values: z.infer<typeof formValidationSchema>
   ) {
     toast.loading("Order creating...", { id: "order" });
     // check if the cart not empty
@@ -101,12 +104,18 @@ const Checkout = () => {
 
     try {
       const res = await createOrder(orderData).unwrap();
+      console.log(res?.data);
       if (res.success) {
         toast.success("Order placed successfully", { id: "order" });
-        dispatch(resetCart());
-        // if(paymentType === "ONLINE") {
+        // dispatch(resetCart());
 
-        // }
+        // redirect to payment if order was successfully placed
+        if (paymentType === "ONLINE") {
+          const { data } = await createPayment({ orderId: res?.data?.id });
+          if (data?.data?.redirect_url) {
+            window.location.href = data?.data?.redirect_url;
+          }
+        }
       }
     } catch (error) {
       toast.error("Something went wrong", { id: "order" });
@@ -228,7 +237,7 @@ const Checkout = () => {
           </Table>
           <RadioGroup
             onValueChange={(value) => setPaymentType(value)}
-            defaultValue="COD"
+            defaultValue="ONLINE"
             className="mt-8"
           >
             <h3 className="text-lg font-semibold">Payment Method</h3>

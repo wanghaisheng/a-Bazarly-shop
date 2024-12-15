@@ -2,20 +2,20 @@ import Container from "@/components/shared/Container";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetBookingByTrxIDQuery } from "@/redux/features/payment/paymentApi";
+import { useGetSinglePaymentQuery } from "@/redux/features/payment/paymentApi";
 import { formatTime } from "@/utils/formatTime";
 import { Check } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const PaymentSuccess = () => {
-  const location = useLocation();
-  const id = location.pathname.split("/")[3];
+  const [params] = useSearchParams();
+  const id = params.get("payment_id");
 
-  const { data, isFetching } = useGetBookingByTrxIDQuery(id);
-  const booking = data?.data;
+  const { data, isFetching } = useGetSinglePaymentQuery(id);
+  const payment = data?.data;
+  console.log(payment);
 
-  const paymentTime = formatTime(booking?.createdAt);
+  const paymentTime = formatTime(payment?.createdAt);
 
   return (
     <div className="bg-slate-50 min-h-screen">
@@ -33,9 +33,7 @@ const PaymentSuccess = () => {
               {isFetching ? (
                 <Skeleton className="h-9 w-full" />
               ) : (
-                <h1 className="text-2xl font-extrabold">
-                  USD {booking?.payableAmount}
-                </h1>
+                <h1 className="text-2xl font-extrabold">৳ {payment?.amount}</h1>
               )}
             </div>
             <Separator className="" />
@@ -45,7 +43,7 @@ const PaymentSuccess = () => {
               <div className="flex flex-col gap-2 w-full">
                 <p className="flex justify-between gap-6 font-bold">
                   <span className="text-zinc-500">Payment Date: </span>
-                  <span>{booking?.date}</span>
+                  <span>{payment?.createdAt?.split("T")[0]}</span>
                 </p>
                 <p className="flex justify-between gap-6 font-bold">
                   <span className="text-zinc-500">Payment Time: </span>
@@ -53,15 +51,15 @@ const PaymentSuccess = () => {
                 </p>
                 <p className="flex justify-between gap-6 font-bold">
                   <span className="text-zinc-500">Sender Name: </span>
-                  <span>{booking?.user?.name}</span>
+                  <span>{payment?.order?.customer?.name}</span>
                 </p>
                 <p className="flex justify-between gap-6 font-bold">
                   <span className="text-zinc-500">Sender Phone: </span>
-                  <span>{booking?.user?.phone}</span>
+                  <span>{payment?.order?.customer?.phoneNumber}</span>
                 </p>
                 <p className="flex justify-between gap-6 font-bold">
                   <span className="text-zinc-500">Trx ID: </span>
-                  <span>{booking?.trxID}</span>
+                  <span>{payment?.transactionId}</span>
                 </p>
               </div>
             )}
@@ -72,7 +70,7 @@ const PaymentSuccess = () => {
               <div className="w-full">
                 <p className="flex justify-between gap-6 font-bold">
                   <span className="text-zinc-500">Amount: </span>
-                  <span>$ {booking?.payableAmount}</span>
+                  <span>৳ {payment?.amount}</span>
                 </p>
               </div>
             )}

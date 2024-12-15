@@ -17,7 +17,7 @@ import { useState } from "react";
 import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
 import { TCategory } from "@/types/TCategory";
 import ProductCard from "./ProductUtils/ProductCard";
-import SectionHeader from "@/components/shared/sectionHeader";
+// import SectionHeader from "@/components/shared/sectionHeader";
 import { useSearchParams } from "react-router-dom";
 
 const AllProducts = () => {
@@ -51,10 +51,10 @@ const AllProducts = () => {
       <Container>
         <div className="space-y-8">
           {/* section header */}
-          <SectionHeader
+          {/* <SectionHeader
             heading="All Our Products"
             subHeading="Shop the latest trends and unbeatable deals today!"
-          />
+          /> */}
 
           {/* Search space */}
           <div className="flex justify-center items-center">

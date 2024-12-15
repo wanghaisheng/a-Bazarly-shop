@@ -4,19 +4,18 @@ import AboutUs from "@/pages/AboutUs/AboutUs";
 import ContactUs from "@/pages/ContactUs/ContactUs";
 import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login/Login";
-import PaymentFail from "@/pages/Payment/PaymentFail";
-import PaymentSuccess from "@/pages/Payment/PaymentSuccess";
 import SignUp from "@/pages/SignUp/SignUp";
 import { createBrowserRouter } from "react-router-dom";
 import Error404Page from "@/pages/Error/Error404Page";
 import UnauthorizedAccess from "@/pages/Error/UnauthorizedAccess";
-import ProtectedRoutes from "./ProtectedRoutes";
 import PrivateRoutes from "./PrivateRoutes";
 import AllProducts from "@/pages/Products/Products";
 import ProductDetails from "@/pages/ProductDetails/ProductDetails";
 import Shop from "@/pages/Shop/Shop";
 import Cart from "@/pages/Cart/Cart";
 import Checkout from "@/pages/Checkout/Checkout";
+import ProtectedRoutes from "./ProtectedRoutes";
+import PaymentSuccess from "@/pages/Payment/PaymentSuccess";
 
 const router = createBrowserRouter([
   {
@@ -49,21 +48,21 @@ const router = createBrowserRouter([
         element: <Checkout />,
       },
       {
-        path: "/payment/success/:id",
+        path: "/payment/success",
         element: (
-          <ProtectedRoutes role="user">
+          <ProtectedRoutes role="CUSTOMER">
             <PaymentSuccess />
           </ProtectedRoutes>
         ),
       },
-      {
-        path: "/payment/fail/:id",
-        element: (
-          <ProtectedRoutes role="user">
-            <PaymentFail />
-          </ProtectedRoutes>
-        ),
-      },
+      // {
+      //   path: "/payment/fail/:id",
+      //   element: (
+      //     <ProtectedRoutes role="user">
+      //       <PaymentFail />
+      //     </ProtectedRoutes>
+      //   ),
+      // },
       {
         path: "/contact",
         element: <ContactUs />,
