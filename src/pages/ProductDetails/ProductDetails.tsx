@@ -18,13 +18,14 @@ import {
   Store,
   Truck,
   Undo2,
-  UserCircle,
 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import RelatedProductCard from "./ProductDetailsUtils/RelatedProductCard";
-import { Rating } from "primereact/rating";
+import { useAppSelector } from "@/redux/hook";
+import { selectCurrentUser } from "@/redux/features/auth/AuthSlice";
+import ReviewCard from "./ProductDetailsUtils/ReviewCard";
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
@@ -32,8 +33,14 @@ const ProductDetails = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
 
-  const { data, isFetching } = useGetSingleProductQuery({ id });
+  const user = useAppSelector(selectCurrentUser);
+
+  const { data, isFetching } = useGetSingleProductQuery({
+    id,
+    userEmail: user?.email,
+  });
   const product = data?.data;
+
   const { data: relatedProductsData } = useGetAllProductsQuery({
     category: product?.category?.name,
     limit: 6,
@@ -236,31 +243,12 @@ const ProductDetails = () => {
                     <div>
                       {product?.review?.length > 0 ? (
                         product?.review?.map((review: any) => (
-                          <div className="py-4 border-t">
-                            <Rating
-                              value={review?.rating}
-                              cancel={false}
-                              readOnly
-                              className="flex gap-1 text-amber-500"
-                            />
-                            <div className="flex gap-2 mt-2">
-                              <UserCircle size={20} className="text-zinc-700" />
-                              <div>
-                                <h3 className="text-sm">
-                                  {review?.customer?.name}
-                                </h3>
-                                <p className="text-xs">
-                                  On {review?.createdAt?.split("T")[0]}
-                                </p>
-                              </div>
-                            </div>
-                            <div className="pt-4">
-                              <p className="text-zinc-800">{review?.comment}</p>
-                            </div>
-                          </div>
+                          <ReviewCard review={review} />
                         ))
                       ) : (
-                        <p>No Review Found</p>
+                        <p className="text-center text-zinc-600 py-4">
+                          No Review Found
+                        </p>
                       )}
                     </div>
                   </div>

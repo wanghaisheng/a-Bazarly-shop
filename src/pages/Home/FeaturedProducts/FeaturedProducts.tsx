@@ -18,6 +18,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
 import { TCategory } from "@/types/TCategory";
 import SectionHeader from "@/components/shared/sectionHeader";
+import { useAppSelector } from "@/redux/hook";
+import { selectCurrentUser } from "@/redux/features/auth/AuthSlice";
 
 const FeaturedProducts = () => {
   const [search, setSearch] = useState("");
@@ -27,6 +29,8 @@ const FeaturedProducts = () => {
   const [sort, setSort] = useState("asc");
   const [page, setPage] = useState(1); // Current page
   const limit = 4; // Items per page
+
+  const user = useAppSelector(selectCurrentUser);
 
   const observer = useRef<IntersectionObserver | null>(null);
 
@@ -41,6 +45,7 @@ const FeaturedProducts = () => {
     maxPrice: maxPrice || 999999,
     page,
     limit,
+    userEmail: user?.email,
   });
 
   // Concatenate fetched data
