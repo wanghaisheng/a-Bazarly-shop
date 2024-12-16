@@ -6,26 +6,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { addToCart } from "@/redux/features/cart/cartSlice";
-import { useAppDispatch } from "@/redux/hook";
+import AddToCart from "@/pages/Cart/CartUtils/AddToCart";
 import { IProduct } from "@/types/TProduct";
-import { CopyPlus, ShoppingCart } from "lucide-react";
+import { CopyPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { id, name, image, price, discount } = product;
-
-  const dispatch = useAppDispatch();
-
-  const handleAddToCart = () => {
-    dispatch(
-      addToCart({
-        product,
-        quantity: 1,
-        price: product?.price,
-      })
-    );
-  };
 
   return (
     <Card className="border-none shadow-sm group">
@@ -50,13 +37,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         </p>
       </CardContent>
       <CardFooter className="grid gap-2">
-        <Button
-          onClick={handleAddToCart}
-          variant={"secondary"}
-          className="w-full gap-2 text-primary group-hover:bg-primary group-hover:text-white"
-        >
-          <ShoppingCart size={20} /> Buy Now
-        </Button>
+        <AddToCart product={product} />
         <Button variant={"ghost"} className="w-full gap-2">
           <CopyPlus size={20} /> Add to Compare
         </Button>

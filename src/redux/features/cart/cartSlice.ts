@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/redux/store";
 import { TCartItem } from "@/types/TCartItem";
+import { toast } from "sonner";
 
 const initialState: TCartItem[] = [];
 
@@ -10,12 +11,14 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action: PayloadAction<TCartItem>) => {
       const { product, quantity } = action.payload;
-      const existingItem = state.find((item) => item.product.id === product.id);
 
+      const existingItem = state.find((item) => item.product.id === product.id);
       if (existingItem) {
         existingItem.quantity += quantity;
+        toast.success("Quantity increased");
       } else {
         state.push(action.payload);
+        toast.success("Added to cart");
       }
     },
     removeFromCart: (state, action: PayloadAction<TCartItem>) => {
