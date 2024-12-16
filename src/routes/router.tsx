@@ -16,6 +16,7 @@ import Cart from "@/pages/Cart/Cart";
 import Checkout from "@/pages/Checkout/Checkout";
 import ProtectedRoutes from "./ProtectedRoutes";
 import PaymentSuccess from "@/pages/Payment/PaymentSuccess";
+import PaymentFail from "@/pages/Payment/PaymentFail";
 
 const router = createBrowserRouter([
   {
@@ -55,14 +56,14 @@ const router = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
-      // {
-      //   path: "/payment/fail/:id",
-      //   element: (
-      //     <ProtectedRoutes role="user">
-      //       <PaymentFail />
-      //     </ProtectedRoutes>
-      //   ),
-      // },
+      {
+        path: "/payment/failed",
+        element: (
+          <ProtectedRoutes role="CUSTOMER">
+            <PaymentFail />
+          </ProtectedRoutes>
+        ),
+      },
       {
         path: "/contact",
         element: <ContactUs />,

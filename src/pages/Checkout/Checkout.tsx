@@ -13,10 +13,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useAppSelector } from "@/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { calculation } from "@/utils/calculation";
 import { XIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -29,10 +29,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { selectCart } from "@/redux/features/cart/cartSlice";
+import { resetCart, selectCart } from "@/redux/features/cart/cartSlice";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCreateOrderMutation } from "@/redux/features/order/orderApi";
-import { useGetProfileQuery } from "@/redux/features/profile/profileApi";
+import {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from "@/redux/features/profile/profileApi";
 import { useCreatePaymentMutation } from "@/redux/features/payment/paymentApi";
 
 // form validation shema
@@ -43,16 +46,14 @@ const formValidationSchema = z.object({
   phoneNumber: z.string().min(11, {
     message: "Phone must be at least 11 digit.",
   }),
-  address: z.string().min(5, {
-    message: "Address must be at least 5 characters.",
-  }),
   email: z.string().email().min(1, {
     message: "Email must be a valid email address.",
   }),
+  address: z.string({ required_error: "Address is required" }),
 });
 
 const Checkout = () => {
-  const [paymentType, setPaymentType] = useState("COD");
+  const [paymentType, setPaymentType] = useState("ONLINE");
 
   const { data } = useGetProfileQuery(undefined);
   const profileData = data?.data;
@@ -60,12 +61,14 @@ const Checkout = () => {
   const cartData = useAppSelector(selectCart);
   const shopId = cartData[0]?.product?.shopId;
 
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const [createOrder] = useCreateOrderMutation();
   const [createPayment] = useCreatePaymentMutation();
+  const [updateProfile] = useUpdateProfileMutation();
 
   const { subTotal, shipping, total } = calculation(cartData);
 
+  // format cart data for sending the server
   const cartFormatedData = cartData.map((item) => ({
     productId: item?.product?.id,
     quantity: item?.quantity,
@@ -77,16 +80,28 @@ const Checkout = () => {
   const form = useForm<z.infer<typeof formValidationSchema>>({
     resolver: zodResolver(formValidationSchema),
     defaultValues: {
-      name: profileData?.name || "",
-      email: profileData?.email || "",
-      phoneNumber: profileData?.phoneNumber || "",
-      address: profileData?.address || "",
+      name: profileData?.name,
+      email: profileData?.email,
+      phoneNumber: profileData?.phoneNumber,
+      address: profileData?.address,
     },
   });
 
+  // Update form values when profileData is fetched
+  useEffect(() => {
+    if (profileData) {
+      form.reset({
+        name: profileData.name,
+        email: profileData.email,
+        phoneNumber: profileData.phoneNumber,
+        address: profileData.address,
+      });
+    }
+  }, [profileData, form]);
+
   // submit order handler
   async function handlePlaceOrder(
-    _values: z.infer<typeof formValidationSchema>
+    values: z.infer<typeof formValidationSchema>
   ) {
     toast.loading("Order creating...", { id: "order" });
     // check if the cart not empty
@@ -95,6 +110,7 @@ const Checkout = () => {
       return;
     }
 
+    // prepare the order data
     const orderData = {
       shopId,
       totalAmount: total,
@@ -102,12 +118,16 @@ const Checkout = () => {
       products: cartFormatedData,
     };
 
+    // update profile data
+    const profileUpdateData = new FormData();
+    profileUpdateData.append("data", JSON.stringify(values));
+    await updateProfile(profileUpdateData);
+
     try {
       const res = await createOrder(orderData).unwrap();
-      console.log(res?.data);
       if (res.success) {
         toast.success("Order placed successfully", { id: "order" });
-        // dispatch(resetCart());
+        dispatch(resetCart());
 
         // redirect to payment if order was successfully placed
         if (paymentType === "ONLINE") {
@@ -256,7 +276,7 @@ const Checkout = () => {
           </RadioGroup>
           <div className="mt-8">
             <Button
-              disabled={cartData.length < 1}
+              // disabled={cartData.length < 1}
               className="w-full text-base py-6 rounded-full"
               onClick={form.handleSubmit(handlePlaceOrder)}
             >

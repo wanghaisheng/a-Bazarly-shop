@@ -2,7 +2,7 @@ import { baseApi } from "../../api/baseApi";
 
 const profileApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    updateReview: builder.mutation({
+    updateProfile: builder.mutation({
       query: (payload) => {
         return {
           url: `/users/update-profile`,
@@ -22,4 +22,4 @@ const profileApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetProfileQuery, useUpdateReviewMutation } = profileApi;
+export const { useGetProfileQuery, useUpdateProfileMutation } = profileApi;
