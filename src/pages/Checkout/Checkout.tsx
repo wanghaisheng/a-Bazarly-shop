@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Container from "@/components/shared/Container";
 import { Button } from "@/components/ui/button";
@@ -37,6 +38,8 @@ import {
   useUpdateProfileMutation,
 } from "@/redux/features/profile/profileApi";
 import { useCreatePaymentMutation } from "@/redux/features/payment/paymentApi";
+import { useApplyCouponMutation } from "@/redux/features/coupon/couponApi";
+import Loading from "@/components/shared/Loading";
 
 // form validation shema
 const formValidationSchema = z.object({
@@ -54,6 +57,27 @@ const formValidationSchema = z.object({
 
 const Checkout = () => {
   const [paymentType, setPaymentType] = useState("ONLINE");
+  const [couponCode, setCouponCode] = useState("");
+  const [discount, setDiscount] = useState(0);
+  // apply coupon code
+  const [applyCoupon] = useApplyCouponMutation();
+  const applyCouponCode = async () => {
+    if (!couponCode) {
+      toast.error("Please enter coupon code");
+      return;
+    }
+    try {
+      const res = await applyCoupon({ code: couponCode }).unwrap();
+      if (res.success) {
+        toast.success("Coupon applied successfully");
+        setDiscount(res?.data?.discountAmount);
+      } else {
+        toast.error("Could not apply coupon");
+      }
+    } catch (error: any) {
+      toast.error(error?.data?.message);
+    }
+  };
 
   const { data } = useGetProfileQuery(undefined);
   const profileData = data?.data;
@@ -62,7 +86,7 @@ const Checkout = () => {
   const shopId = cartData[0]?.product?.shopId;
 
   const dispatch = useAppDispatch();
-  const [createOrder] = useCreateOrderMutation();
+  const [createOrder, { isLoading }] = useCreateOrderMutation();
   const [createPayment] = useCreatePaymentMutation();
   const [updateProfile] = useUpdateProfileMutation();
 
@@ -113,7 +137,7 @@ const Checkout = () => {
     // prepare the order data
     const orderData = {
       shopId,
-      totalAmount: total,
+      totalAmount: total - discount,
       paymentType,
       products: cartFormatedData,
     };
@@ -144,148 +168,168 @@ const Checkout = () => {
   }
 
   return (
-    <Container>
-      <div className="flex flex-wrap w-full justify-between gap-10 my-12">
-        {/* billing details */}
-        <div className="border p-8 flex-1">
-          <CardTitle className="mb-8 font-bold">Billing Details</CardTitle>
-          <Form {...form}>
-            <form className="space-y-8 px-1">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Your name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="phoneNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Phone</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Your phone" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Email address"
-                        {...field}
-                        type="email"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="address"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Delivery Address</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Your address"
-                        {...field}
-                        type="text"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </form>
-          </Form>
-        </div>
-        {/* Order Details section */}
-        <div className="w-full md:w-1/2 p-8 border">
-          <CardTitle className="mb-8 font-bold">Your Order</CardTitle>
-          <Table className="text-base">
-            <TableHeader>
-              <TableRow>
-                <TableHead className="font-bold">Title</TableHead>
-                <TableHead className="font-bold">Subtotal</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {cartData.map((item, index) => (
-                <TableRow key={index}>
-                  <TableCell className="flex items-center gap-2">
-                    {item?.product?.name}{" "}
-                    <span className="font-bold inline-flex items-center gap-1">
-                      {" "}
-                      <XIcon size={16} /> {item?.quantity}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    $ {item?.quantity * item?.product?.price}
-                  </TableCell>
+    <div>
+      {isLoading && <Loading />}
+      <Container>
+        <div className="flex flex-wrap w-full justify-between gap-10 my-12">
+          {/* billing details */}
+          <div className="border p-8 flex-1">
+            <CardTitle className="mb-8 font-bold">Billing Details</CardTitle>
+            <Form {...form}>
+              <form className="space-y-8 px-1">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Your name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="phoneNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Your phone" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Email address"
+                          {...field}
+                          type="email"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="address"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Delivery Address</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Your address"
+                          {...field}
+                          type="text"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </form>
+            </Form>
+          </div>
+          {/* Order Details section */}
+          <div className="w-full md:w-1/2 p-8 border">
+            <CardTitle className="mb-8 font-bold">Your Order</CardTitle>
+            <Table className="text-base">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="font-bold">Title</TableHead>
+                  <TableHead className="font-bold">Subtotal</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell className="font-bold">Subtotal</TableCell>
-                <TableCell>$ {subTotal}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-bold">Shipping</TableCell>
-                <TableCell>$ {shipping}</TableCell>
-              </TableRow>
-              <TableRow className="font-bold">
-                <TableCell>Total</TableCell>
-                <TableCell>$ {total}</TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
-          <RadioGroup
-            onValueChange={(value) => setPaymentType(value)}
-            defaultValue="ONLINE"
-            className="mt-8"
-          >
-            <h3 className="text-lg font-semibold">Payment Method</h3>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="COD" id="COD" className="size-5" />
-              <Label htmlFor="COD" className="text-base">
-                Cash on Delivery
-              </Label>
+              </TableHeader>
+              <TableBody>
+                {cartData.map((item, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="flex items-center gap-2">
+                      {item?.product?.name}{" "}
+                      <span className="font-bold inline-flex items-center gap-1">
+                        {" "}
+                        <XIcon size={16} /> {item?.quantity}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      ৳ {item?.quantity * item?.product?.price}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TableCell className="font-bold">Subtotal</TableCell>
+                  <TableCell>৳ {subTotal}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-bold">Shipping</TableCell>
+                  <TableCell>৳ {shipping}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-bold">Discount</TableCell>
+                  <TableCell>৳ {discount}</TableCell>
+                </TableRow>
+                <TableRow className="font-bold">
+                  <TableCell>Total</TableCell>
+                  <TableCell>৳ {total - discount}</TableCell>
+                </TableRow>
+              </TableFooter>
+            </Table>
+
+            {/* apply coupon */}
+            <div className="flex items-center gap-3 mt-4">
+              <Input
+                placeholder="Coupon Code"
+                onBlur={(e) => setCouponCode(e.target.value)}
+              />
+              <Button onClick={applyCouponCode} className="h-10">
+                Apply Coupon
+              </Button>
             </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="ONLINE" id="Online" className="size-5" />
-              <Label htmlFor="Online" className="text-base">
-                Online Payment
-              </Label>
-            </div>
-          </RadioGroup>
-          <div className="mt-8">
-            <Button
-              // disabled={cartData.length < 1}
-              className="w-full text-base py-6 rounded-full"
-              onClick={form.handleSubmit(handlePlaceOrder)}
+
+            {/* payment method */}
+            <RadioGroup
+              onValueChange={(value) => setPaymentType(value)}
+              defaultValue="ONLINE"
+              className="mt-4"
             >
-              Place Order
-            </Button>
+              <h3 className="text-lg font-semibold">Payment Method</h3>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="COD" id="COD" className="size-5" />
+                <Label htmlFor="COD" className="text-base">
+                  Cash on Delivery
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="ONLINE" id="Online" className="size-5" />
+                <Label htmlFor="Online" className="text-base">
+                  Online Payment
+                </Label>
+              </div>
+            </RadioGroup>
+            <div className="mt-8">
+              <Button
+                // disabled={cartData.length < 1}
+                className="w-full text-base py-6 rounded-full"
+                onClick={form.handleSubmit(handlePlaceOrder)}
+              >
+                Confirm Order
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
 };
 

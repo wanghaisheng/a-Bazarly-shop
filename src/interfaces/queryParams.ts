@@ -39,3 +39,13 @@ export interface IShopQueryParams
   sortBy?: string;
   sortOrder?: string;
 }
+
+export interface ICouponQueryParams
+  extends Record<string, string | number | undefined> {
+  searchTerm?: string;
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  startTime?: string;
+  endTime?: string;
+}

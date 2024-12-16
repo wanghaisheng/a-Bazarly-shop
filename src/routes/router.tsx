@@ -17,6 +17,7 @@ import Checkout from "@/pages/Checkout/Checkout";
 import ProtectedRoutes from "./ProtectedRoutes";
 import PaymentSuccess from "@/pages/Payment/PaymentSuccess";
 import PaymentFail from "@/pages/Payment/PaymentFail";
+import userRole from "@/constants/userRole";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/shops/:id",
-        element: <Shop />,
+        element: (
+          <ProtectedRoutes role={userRole.CUSTOMER}>
+            <Shop />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "/cart",
