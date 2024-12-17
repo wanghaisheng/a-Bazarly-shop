@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import {
   addToCart,
   resetCart,
-  selectCart,
+  selectCartProducts,
 } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { IProduct } from "@/types/TProduct";
@@ -23,15 +23,16 @@ const AddToCart = ({ product }: { product: IProduct }) => {
   const [open, setOpen] = useState(false);
 
   const dispatch = useAppDispatch();
-  const cart = useAppSelector(selectCart);
-  const isShopSame = cart.find(
+  const cartProducts = useAppSelector(selectCartProducts);
+
+  const isShopSame = cartProducts.find(
     (item) => item.product.shopId === product.shopId
   );
 
   // Logic to trigger the dialog
   const handleAddToCart = () => {
     // if not same shop products then show a dialog, else add to cart
-    if (cart.length && !isShopSame) {
+    if (cartProducts.length && !isShopSame) {
       setOpen(true);
     } else {
       dispatch(

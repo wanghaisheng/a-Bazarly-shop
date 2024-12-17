@@ -30,7 +30,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { resetCart, selectCart } from "@/redux/features/cart/cartSlice";
+import { resetCart, selectCartProducts } from "@/redux/features/cart/cartSlice";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCreateOrderMutation } from "@/redux/features/order/orderApi";
 import {
@@ -82,7 +82,7 @@ const Checkout = () => {
   const { data } = useGetProfileQuery(undefined);
   const profileData = data?.data;
 
-  const cartData = useAppSelector(selectCart);
+  const cartData = useAppSelector(selectCartProducts);
   const shopId = cartData[0]?.product?.shopId;
 
   const dispatch = useAppDispatch();

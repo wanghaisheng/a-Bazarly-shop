@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,8 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import AddToCart from "@/pages/Cart/CartUtils/AddToCart";
+import AddToComparison from "@/pages/Comparison/ComparisonUtils/AddToComparison";
 import { IProduct } from "@/types/TProduct";
-import { CopyPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
@@ -38,9 +37,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
       </CardContent>
       <CardFooter className="grid gap-2">
         <AddToCart product={product} />
-        <Button variant={"ghost"} className="w-full gap-2">
-          <CopyPlus size={20} /> Add to Compare
-        </Button>
+        <AddToComparison product={product} />
       </CardFooter>
     </Card>
   );

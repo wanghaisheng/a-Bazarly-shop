@@ -21,13 +21,13 @@ import {
 } from "../ui/dropdown-menu";
 import { useAppDispatch } from "@/redux/hook";
 import user_photo from "../../assets/icons/user.png";
-import { selectCart } from "@/redux/features/cart/cartSlice";
 import { Badge } from "../ui/badge";
 import userRole from "@/constants/userRole";
+import { selectCartProducts } from "@/redux/features/cart/cartSlice";
 
 const Navbar = () => {
   const user = useSelector(selectAuth);
-  const cart = useSelector(selectCart);
+  const cart = useSelector(selectCartProducts);
   const dispatch = useAppDispatch();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

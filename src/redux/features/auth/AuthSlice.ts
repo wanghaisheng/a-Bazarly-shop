@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: TAuth = {
   accessToken: null,
+  refreshToken: null,
   user: null,
 };
 

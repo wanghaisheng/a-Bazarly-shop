@@ -16,23 +16,27 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { removeFromCart, selectCart } from "@/redux/features/cart/cartSlice";
+import {
+  removeFromCart,
+  selectCartProducts,
+} from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { calculation } from "@/utils/calculation";
 import { XIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const cartData = useAppSelector(selectCart);
+  const products = useAppSelector(selectCartProducts);
+  console.log(products);
   const dispatch = useAppDispatch();
-  const { subTotal, shipping, total } = calculation(cartData);
+  const { subTotal, shipping, total } = calculation(products);
   return (
     <Container>
       <div className="flex flex-col md:flex-row gap-8 my-16">
         {/* product table */}
         <div className="flex-1">
           <Table className="text-base">
-            {cartData.length < 1 && (
+            {products.length < 1 && (
               <TableCaption className="text-lg">No Item Added</TableCaption>
             )}
             <TableHeader>
@@ -45,7 +49,7 @@ const Cart = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {cartData?.map((item, index) => (
+              {products?.map((item, index) => (
                 <TableRow key={index}>
                   <TableCell>
                     <img src={item?.product?.image} alt="product" />
@@ -88,9 +92,9 @@ const Cart = () => {
               </h3>
             </CardContent>
             <CardFooter className="flex justify-between">
-              <Link to={cartData.length ? "/checkout" : ""} className="w-full">
+              <Link to={products.length ? "/checkout" : ""} className="w-full">
                 <Button
-                  disabled={cartData.length < 1}
+                  disabled={products.length < 1}
                   className="w-full text-base py-6 rounded-full"
                 >
                   Checkout

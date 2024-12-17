@@ -19,6 +19,7 @@ import PaymentSuccess from "@/pages/Payment/PaymentSuccess";
 import PaymentFail from "@/pages/Payment/PaymentFail";
 import userRole from "@/constants/userRole";
 import Recent from "@/pages/Recent Viewed/Recent";
+import Comparison from "@/pages/Comparison/Comparison";
 
 const router = createBrowserRouter([
   {
@@ -55,12 +56,20 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/comparison",
+        element: <Comparison />,
+      },
+      {
         path: "/cart",
         element: <Cart />,
       },
       {
         path: "/checkout",
-        element: <Checkout />,
+        element: (
+          <ProtectedRoutes role={userRole.CUSTOMER}>
+            <Checkout />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "/payment/success",

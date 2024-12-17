@@ -1,3 +1,5 @@
+import { TCategory } from "./TCategory";
+
 export interface IProduct {
   id: string;
   name: string;
@@ -7,6 +9,7 @@ export interface IProduct {
   stock: number;
   image: string;
   categoryId: string;
+  category: TCategory;
   shopId: string;
   status: "ACTIVE" | "DRAFT" | "PAUSED" | "ARCHIVED" | "DELETED";
   isDeleted: boolean;
