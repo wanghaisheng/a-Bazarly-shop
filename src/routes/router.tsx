@@ -22,6 +22,8 @@ import Recent from "@/pages/Recent Viewed/Recent";
 import Comparison from "@/pages/Comparison/Comparison";
 import ForgotPassword from "@/pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "@/pages/ResetPassword/ResetPassword";
+import Dashboard from "@/pages/Dashboard/Shared/Dashboard";
+import MyOrders from "@/pages/Dashboard/Customer/MyOrders/MyOrders";
 
 const router = createBrowserRouter([
   {
@@ -127,18 +129,18 @@ const router = createBrowserRouter([
       </PrivateRoutes>
     ),
     children: [
-      // {
-      //   path: "index",
-      //   element: <Dashboard />,
-      // },
-      // {
-      //   path: "my-bookings",
-      //   element: (
-      //     <ProtectedRoutes role="user">
-      //       <UserBookings />
-      //     </ProtectedRoutes>
-      //   ),
-      // },
+      {
+        path: "index",
+        element: <Dashboard />,
+      },
+      {
+        path: "my-orders",
+        element: (
+          <ProtectedRoutes role={userRole.CUSTOMER}>
+            <MyOrders />
+          </ProtectedRoutes>
+        ),
+      },
       // {
       //   path: "bookings",
       //   element: (

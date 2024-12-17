@@ -10,13 +10,6 @@ import {
 
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -35,6 +28,8 @@ import {
 } from "@/redux/features/auth/AuthSlice";
 import { NavLink } from "react-router-dom";
 import user_photo from "../../assets/icons/user.png";
+import userRole from "@/constants/userRole";
+import { CustomerSidebarMenus } from "./SidebarMenus/SidebarMenus";
 
 const DashboardLayout = () => {
   const auth = useAppSelector(selectAuth);
@@ -46,7 +41,7 @@ const DashboardLayout = () => {
       <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr] gap-2">
         {/* sidebar for large screen */}
         <div className="hidden lg:block">
-          <div className="flex max-w-[280px] h-full max-h-screen flex-col gap-6 p-4 shadow-md fixed left-0 top-0">
+          <div className="flex w-full max-w-[280px] h-full max-h-screen flex-col gap-6 p-4 shadow-md fixed left-0 top-0">
             <div className="flex h-14 items-center lg:h-[60px] pb-2 shadow-sm">
               <Link to="/" className="flex items-center gap-2">
                 <h1 className="text-2xl font-extrabold">
@@ -74,67 +69,29 @@ const DashboardLayout = () => {
                   <Home className="size-5" />
                   Dashboard
                 </NavLink>
-                {user?.role === "user" && (
-                  <NavLink
-                    to="/dashboard/my-bookings"
-                    className={({ isActive, isPending }) =>
-                      isPending
-                        ? "pending"
-                        : isActive
-                        ? "flex items-center gap-3 rounded-lg px-3 py-2 bg-muted text-primary transition-all hover:text-primary"
-                        : "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                    }
-                  >
-                    <Ticket className="size-5" />
-                    My Bookings
-                  </NavLink>
-                )}
-                {user?.role === "admin" && (
-                  <div className="flex flex-col gap-2">
-                    <NavLink
-                      to="/dashboard/bookings"
-                      className={({ isActive, isPending }) =>
-                        isPending
-                          ? "pending"
-                          : isActive
-                          ? "flex items-center gap-3 rounded-lg px-3 py-2 bg-muted text-primary transition-all hover:text-primary"
-                          : "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                      }
-                    >
-                      <Ticket className="size-5" />
-                      Bookings{" "}
-                    </NavLink>
-                    <NavLink
-                      to="/dashboard/facilities"
-                      className={({ isActive, isPending }) =>
-                        isPending
-                          ? "pending"
-                          : isActive
-                          ? "flex items-center gap-3 rounded-lg px-3 py-2 bg-muted text-primary transition-all hover:text-primary"
-                          : "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                      }
-                    >
-                      <Dumbbell className="size-5" />
-                      Facilities{" "}
-                    </NavLink>
-                    <NavLink
-                      to="/dashboard/add-admin"
-                      className={({ isActive, isPending }) =>
-                        isPending
-                          ? "pending"
-                          : isActive
-                          ? "flex items-center gap-3 rounded-lg px-3 py-2 bg-muted text-primary transition-all hover:text-primary"
-                          : "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-                      }
-                    >
-                      <Users className="size-5" />
-                      Add Admin
-                    </NavLink>
-                  </div>
-                )}
+                <div className="flex flex-col gap-2">
+                  {user?.role === userRole.CUSTOMER &&
+                    CustomerSidebarMenus.map((item, idx) => (
+                      <NavLink
+                        to={item.path}
+                        key={idx}
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending"
+                            : isActive
+                            ? "flex items-center gap-3 rounded-lg px-3 py-2 bg-muted text-primary transition-all hover:text-primary"
+                            : "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                        }
+                      >
+                        {item.icon}
+                        {item.title}
+                      </NavLink>
+                    ))}
+                </div>
               </nav>
             </div>
-            <div className="mt-auto">
+            {/* sidebar bottom elements */}
+            {/* <div className="mt-auto">
               <Card x-chunk="dashboard-02-chunk-0">
                 <CardHeader className="p-2 pt-0 md:p-4">
                   <CardTitle>Upgrade to Pro</CardTitle>
@@ -149,7 +106,7 @@ const DashboardLayout = () => {
                   </Button>
                 </CardContent>
               </Card>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -280,12 +237,6 @@ const DashboardLayout = () => {
                         className="overflow-hidden rounded-full"
                       />
                     </Button>
-                    <div className="hidden md:block">
-                      <h3 className="text-sm font-bold">{user?.name}</h3>
-                      <p className="text-xs font-medium text-zinc-500">
-                        {user?.email}
-                      </p>
-                    </div>
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
