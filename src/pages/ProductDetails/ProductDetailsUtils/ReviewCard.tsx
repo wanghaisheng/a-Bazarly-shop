@@ -3,6 +3,7 @@ import { UserCircle } from "lucide-react";
 import { Rating } from "primereact/rating";
 
 const ReviewCard = ({ review }: { review: IReview }) => {
+  
   return (
     <div className="py-4 border-t">
       <Rating

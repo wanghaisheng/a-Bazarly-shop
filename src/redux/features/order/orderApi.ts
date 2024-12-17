@@ -39,6 +39,13 @@ const orderApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Orders"],
     }),
+    getProductOrders: builder.query({
+      query: (id) => ({
+        url: `/orders/get-product-order/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Orders"],
+    }),
     getAllOrders: builder.query({
       query: ({
         shop,
@@ -77,6 +84,7 @@ export const {
   useChangeOrderStatusMutation,
   useChangePaymentStatusMutation,
   useGetSingleOrderQuery,
+  useGetProductOrdersQuery,
   useGetAllOrdersQuery,
   useGetMyOrdersQuery,
   useGetShopOrdersQuery,

@@ -29,6 +29,7 @@ import ReviewCard from "./ProductDetailsUtils/ReviewCard";
 import { Rating } from "primereact/rating";
 import { useGetProductReviewQuery } from "@/redux/features/review/reviewApi";
 import { addToCart } from "@/redux/features/cart/cartSlice";
+import { ReviewDialogue } from "./ProductDetailsUtils/ReviewDialogue";
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
@@ -261,12 +262,7 @@ const ProductDetails = () => {
                           who own it.
                         </p>
                       </div>
-                      <Button
-                        variant={"outline"}
-                        className="border-primary border-2 font-bold text-primary hover:bg-primary hover:text-white"
-                      >
-                        Write a Review
-                      </Button>
+                      <ReviewDialogue product={product} />
                     </div>
                     <div>
                       {reviewData?.data?.reviews?.length > 0 ? (
