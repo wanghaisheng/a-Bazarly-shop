@@ -19,6 +19,7 @@ import { TCategory } from "@/types/TCategory";
 import ProductCard from "./ProductUtils/ProductCard";
 // import SectionHeader from "@/components/shared/sectionHeader";
 import { useSearchParams } from "react-router-dom";
+import SectionHeading from "@/components/shared/SectionHeader";
 
 const AllProducts = () => {
   const [search, setSearch] = useState("");
@@ -51,10 +52,10 @@ const AllProducts = () => {
       <Container>
         <div className="space-y-8">
           {/* section header */}
-          {/* <SectionHeader
+          <SectionHeading
             heading="All Our Products"
             subHeading="Shop the latest trends and unbeatable deals today!"
-          /> */}
+          />
 
           {/* Search space */}
           <div className="flex justify-center items-center">

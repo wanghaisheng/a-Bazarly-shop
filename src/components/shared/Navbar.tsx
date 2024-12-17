@@ -23,6 +23,7 @@ import { useAppDispatch } from "@/redux/hook";
 import user_photo from "../../assets/icons/user.png";
 import { selectCart } from "@/redux/features/cart/cartSlice";
 import { Badge } from "../ui/badge";
+import userRole from "@/constants/userRole";
 
 const Navbar = () => {
   const user = useSelector(selectAuth);
@@ -75,10 +76,10 @@ const Navbar = () => {
               Products
             </Link>
             <Link
-              to="/about-us"
+              to="/recent-products"
               className="flex items-center gap-2 rounded-md px-3 py-2 text-base font-medium hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50"
             >
-              About Us
+              Recent Products
             </Link>
             <Link
               to="/contact"
@@ -121,14 +122,16 @@ const Navbar = () => {
             </Link>
           </NavigationMenuLink>
 
-          <NavigationMenuLink asChild>
-            <Link
-              to="/about-us"
-              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-base font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50"
-            >
-              About Us
-            </Link>
-          </NavigationMenuLink>
+          {user.user?.role === userRole.CUSTOMER && (
+            <NavigationMenuLink asChild>
+              <Link
+                to="/recent-products"
+                className="inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-base font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50"
+              >
+                Recent Viewed
+              </Link>
+            </NavigationMenuLink>
+          )}
 
           {/* contact */}
           <NavigationMenuLink asChild>
