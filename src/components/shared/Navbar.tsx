@@ -22,12 +22,13 @@ import {
 import { useAppDispatch } from "@/redux/hook";
 import user_photo from "../../assets/icons/user.png";
 import { Badge } from "../ui/badge";
-import userRole from "@/constants/userRole";
 import { selectCartProducts } from "@/redux/features/cart/cartSlice";
+import { selectComparisonProducts } from "@/redux/features/comparison/comparisonSlice";
 
 const Navbar = () => {
   const user = useSelector(selectAuth);
   const cart = useSelector(selectCartProducts);
+  const comparisonProducts = useSelector(selectComparisonProducts);
   const dispatch = useAppDispatch();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -82,6 +83,20 @@ const Navbar = () => {
               Recent Products
             </Link>
             <Link
+              to="/recent-products"
+              className="flex items-center gap-2 rounded-md px-3 py-2 text-base font-medium hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 relative"
+            >
+              Compare
+              {comparisonProducts.length > 0 && (
+                <Badge
+                  variant="secondary"
+                  className="absolute top-2 right-8 rounded-full bg-primary px-2"
+                >
+                  {comparisonProducts.length}
+                </Badge>
+              )}
+            </Link>
+            <Link
               to="/contact"
               className="flex items-center gap-2 rounded-md px-3 py-2 text-base font-medium hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50"
             >
@@ -122,7 +137,7 @@ const Navbar = () => {
             </Link>
           </NavigationMenuLink>
 
-          {user.user?.role === userRole.CUSTOMER && (
+          {
             <NavigationMenuLink asChild>
               <Link
                 to="/recent-products"
@@ -131,7 +146,26 @@ const Navbar = () => {
                 Recent Viewed
               </Link>
             </NavigationMenuLink>
-          )}
+          }
+
+          {
+            <NavigationMenuLink asChild>
+              <Link
+                to="/recent-products"
+                className="inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-base font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 relative"
+              >
+                Compare
+                {cart.length > 0 && (
+                  <Badge
+                    variant="secondary"
+                    className="absolute -top-2 -right-0 rounded-full bg-primary px-2"
+                  >
+                    {cart.length}
+                  </Badge>
+                )}
+              </Link>
+            </NavigationMenuLink>
+          }
 
           {/* contact */}
           <NavigationMenuLink asChild>
