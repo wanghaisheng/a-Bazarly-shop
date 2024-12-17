@@ -12,46 +12,60 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useForgotPasswordMutation } from "@/redux/features/auth/authApi";
+import { useResetPasswordMutation } from "@/redux/features/auth/authApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
 
 // form validation shema
 const formValidationSchema = z.object({
-  email: z.string().email().min(1, {
-    message: "Email must be a valid email address.",
+  password: z.string().min(6, {
+    message: "Password must be at least 6 characters.",
   }),
 });
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isEmailSent, setIsEmailSent] = useState(false);
-  const [forgotPassword] = useForgotPasswordMutation();
+  const [isPasswordReseted, setPasswordReseted] = useState(false);
+  const [resetPassword] = useResetPasswordMutation();
+
+  const [params] = useSearchParams();
+  const userId = params.get("id");
+  const token = params.get("token");
 
   // define form
   const form = useForm<z.infer<typeof formValidationSchema>>({
     resolver: zodResolver(formValidationSchema),
     defaultValues: {
-      email: "",
+      password: "",
     },
   });
 
-  const handleForgotPassword = async (
+  const handleResetPassword = async (
     values: z.infer<typeof formValidationSchema>
   ) => {
     setIsLoading(true);
+
     try {
-      const res = await forgotPassword(values).unwrap();
+      const res = await resetPassword({
+        token,
+        payload: {
+          id: userId,
+          password: values.password,
+        },
+      }).unwrap();
+
       if (res.success) {
         setIsLoading(false);
-        setIsEmailSent(true);
+        setPasswordReseted(true);
       }
     } catch (error: any) {
-      toast.error(error?.data?.message || "Something went wrong");
+      toast(error?.data?.message || "Something went wrong");
       setIsLoading(false);
     }
   };
@@ -62,53 +76,49 @@ const ForgotPassword = () => {
       <Container>
         <div className="flex w-full justify-center items-center gap-10">
           {/* form */}
-          {!isEmailSent && (
+          {!isPasswordReseted && (
             <div className="border rounded-2xl bg-white p-4 md:p-8 w-full md:w-1/2 lg:w-2/5">
               <CardTitle className="mb-8 font-bold text-2xl text-center">
-                Forgot Password?
+                Reset Password
               </CardTitle>
               <Form {...form}>
                 <form
-                  onSubmit={form.handleSubmit(handleForgotPassword)}
+                  onSubmit={form.handleSubmit(handleResetPassword)}
                   className="space-y-4 px-1"
                 >
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>New Password</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="Enter email address"
+                            placeholder="Enter new password"
                             {...field}
-                            type="email"
+                            type="password"
                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  <Button className="w-full md:text-base py-5">Send</Button>
+                  <Button className="w-full md:text-base py-5" type="submit">
+                    Reset
+                  </Button>
                 </form>
               </Form>
             </div>
           )}
-          {isEmailSent && (
+          {isPasswordReseted && (
             <div className="flex flex-col items-center justify-center gap-4 max-w-lg">
               <h1 className="flex items-center gap-2 text-xl font-semibold">
                 <Check className="text-green-600" />
-                Email Sent Successfully!
+                Password Reseted Successfully
               </h1>
-              <p className="text-center">
-                We have sent you an email with reset password link. Please check
-                it.
-              </p>
-              <p className="text-center">
-                <strong>Notice: </strong>
-                This reset link will be expired after{" "}
-                <span className="font-semibold">5 minutes</span>.
-              </p>
+              <Link to={"/login"}>
+                <Button>Login Now</Button>
+              </Link>
             </div>
           )}
         </div>
@@ -117,4 +127,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;
