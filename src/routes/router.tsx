@@ -58,7 +58,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/comparison",
+        path: "/compare-products",
         element: <Comparison />,
       },
       {

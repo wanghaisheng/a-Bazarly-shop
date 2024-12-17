@@ -83,7 +83,7 @@ const Navbar = () => {
               Recent Products
             </Link>
             <Link
-              to="/recent-products"
+              to="/compare-products"
               className="flex items-center gap-2 rounded-md px-3 py-2 text-base font-medium hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 relative"
             >
               Compare
@@ -151,16 +151,16 @@ const Navbar = () => {
           {
             <NavigationMenuLink asChild>
               <Link
-                to="/recent-products"
+                to="/compare-products"
                 className="inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-base font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 relative"
               >
                 Compare
-                {cart.length > 0 && (
+                {comparisonProducts.length > 0 && (
                   <Badge
                     variant="secondary"
                     className="absolute -top-2 -right-0 rounded-full bg-primary px-2"
                   >
-                    {cart.length}
+                    {comparisonProducts.length}
                   </Badge>
                 )}
               </Link>

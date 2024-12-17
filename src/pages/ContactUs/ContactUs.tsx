@@ -1,5 +1,4 @@
 import Container from "@/components/shared/Container";
-import PoiMarkers from "@/components/shared/PoiMarkers";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,11 +11,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  APIProvider,
-  Map,
-  MapCameraChangedEvent,
-} from "@vis.gl/react-google-maps";
 import { Building2, Mail, Phone } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -36,12 +30,6 @@ const formValidationSchema = z.object({
     message: "Message must be at least 10 characters.",
   }),
 });
-
-// office location for google maps
-type Poi = { key: string; location: google.maps.LatLngLiteral };
-const locations: Poi[] = [
-  { key: "operaHouse", location: { lat: 40.712776, lng: -74.005974 } },
-];
 
 const ContactUs = () => {
   // define form
@@ -85,7 +73,7 @@ const ContactUs = () => {
           {/* background image */}
           <div className="">
             <img
-              src="https://c4.wallpaperflare.com/wallpaper/971/967/737/sports-images-for-desktop-background-wallpaper-preview.jpg"
+              src="https://img.freepik.com/free-vector/flat-design-illustration-customer-support_23-2148887720.jpg?semt=ais_hybrid"
               alt="sport image"
               className="rounded-lg h-full object-cover"
             />
@@ -98,7 +86,7 @@ const ContactUs = () => {
               </h1>
               <p className="font-medium">
                 Or just reach out manually to{" "}
-                <span className="text-primary">hello@gamespaces.com</span>
+                <span className="text-primary">sales@bazarly.com</span>
               </p>
             </div>
             <Form {...form}>
@@ -190,7 +178,7 @@ const ContactUs = () => {
             </h1>
             <p className="font-medium">
               Or just reach out manually to{" "}
-              <span className="text-primary">hello@gamespaces.com</span>
+              <span className="text-primary">sales@bazarly.com</span>
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -200,9 +188,7 @@ const ContactUs = () => {
               </span>
               <h3 className="text-lg font-bold">Email Support</h3>
               <p className="text-sm">Our team can respond in real time.</p>
-              <p className="mt-3 text-primary font-bold">
-                hello@gamespaces.com
-              </p>
+              <p className="mt-3 text-primary font-bold">sales@bazarly.com</p>
             </div>
             <div className="p-4">
               <span className="inline-flex p-2 mb-3 bg-indigo-50 rounded-full text-primary">
@@ -222,47 +208,6 @@ const ContactUs = () => {
               <p className="text-sm">Available during working hours.</p>
               <p className="mt-3 text-primary font-bold">(+1)234-4567-789</p>
             </div>
-          </div>
-        </div>
-        {/* map section */}
-        <div className="grid md:grid-cols-2 gap-y-10 lg:gap-20 py-12">
-          <div className="flex flex-col justify-center">
-            <div className="space-y-4">
-              <span className="text-sm font-semibold border rounded-full px-3 py-1">
-                Visit Our Office
-              </span>
-              <h1 className="text-2xl md:text-3xl font-extrabold pt-2">
-                Our Location
-              </h1>
-              <div className="space-y-2">
-                <p className="font-medium">22/c Elementary Avenue</p>
-                <p className="font-medium">
-                  New York City, United States of America
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="min-h-96">
-            <APIProvider
-              apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY as string}
-              onLoad={() => console.log("Maps API has loaded.")}
-            >
-              <Map
-                mapId="DEMO_MAP_ID"
-                defaultZoom={13}
-                defaultCenter={{ lat: 40.712776, lng: -74.005974 }}
-                onCameraChanged={(ev: MapCameraChangedEvent) =>
-                  console.log(
-                    "camera changed:",
-                    ev.detail.center,
-                    "zoom:",
-                    ev.detail.zoom
-                  )
-                }
-              >
-                <PoiMarkers pois={locations} />
-              </Map>
-            </APIProvider>
           </div>
         </div>
       </Container>

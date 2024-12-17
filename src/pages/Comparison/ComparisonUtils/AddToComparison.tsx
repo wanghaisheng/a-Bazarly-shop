@@ -62,7 +62,7 @@ const AddToComparison = ({ product }: { product: IProduct }) => {
             <AlertDialogCancel onClick={() => setOpen(false)}>
               Close
             </AlertDialogCancel>
-            <Link to={"/comparison"}>
+            <Link to={"/compare-products"}>
               <AlertDialogAction>Compare Now</AlertDialogAction>
             </Link>
           </AlertDialogFooter>

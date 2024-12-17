@@ -1,4 +1,3 @@
-import BannerSection from "./BannerSection";
 import CategoriesSection from "./Categories/CategoriesSection";
 import FeaturedFacilities from "./FeaturedProducts/FeaturedProducts";
 
@@ -6,7 +5,7 @@ const Home = () => {
   return (
     <div>
       {/* banner section */}
-      <BannerSection />
+      {/* <BannerSection /> */}
       {/* categories */}
       <CategoriesSection />
       {/* featured facilities */}
