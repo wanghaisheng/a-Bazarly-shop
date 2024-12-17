@@ -20,6 +20,7 @@ import PaymentFail from "@/pages/Payment/PaymentFail";
 import userRole from "@/constants/userRole";
 import Recent from "@/pages/Recent Viewed/Recent";
 import Comparison from "@/pages/Comparison/Comparison";
+import ForgotPassword from "@/pages/ForgotPassword/ForgotPassword";
 
 const router = createBrowserRouter([
   {
@@ -102,6 +103,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
       },
       {
         path: "/unauthorized-access",

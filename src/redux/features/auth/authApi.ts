@@ -38,6 +38,33 @@ const authApi = baseApi.injectEndpoints({
         };
       },
     }),
+    forgotPassword: builder.mutation({
+      query: (payload) => {
+        return {
+          url: `/auth/forgot-password`,
+          method: "POST",
+          body: payload,
+        };
+      },
+    }),
+    resetPassword: builder.mutation({
+      query: (payload) => {
+        return {
+          url: `/auth/reset-password`,
+          method: "POST",
+          body: payload,
+        };
+      },
+    }),
+    changePassword: builder.mutation({
+      query: (payload) => {
+        return {
+          url: `/auth/change-password`,
+          method: "POST",
+          body: payload,
+        };
+      },
+    }),
   }),
 });
 
@@ -46,4 +73,7 @@ export const {
   useCustomerSignUpMutation,
   useVendorSignUpMutation,
   useAdminSignUpMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+  useChangePasswordMutation,
 } = authApi;
