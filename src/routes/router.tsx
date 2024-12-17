@@ -24,6 +24,7 @@ import ForgotPassword from "@/pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "@/pages/ResetPassword/ResetPassword";
 import Dashboard from "@/pages/Dashboard/Shared/Dashboard";
 import MyOrders from "@/pages/Dashboard/Customer/MyOrders/MyOrders";
+import Customers from "@/pages/Dashboard/Customer/Admin/Customers/Customers";
 
 const router = createBrowserRouter([
   {
@@ -141,14 +142,14 @@ const router = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
-      // {
-      //   path: "bookings",
-      //   element: (
-      //     <ProtectedRoutes role="admin">
-      //       <AdminBookings />
-      //     </ProtectedRoutes>
-      //   ),
-      // },
+      {
+        path: "customers",
+        element: (
+          <ProtectedRoutes role={userRole.ADMIN}>
+            <Customers />
+          </ProtectedRoutes>
+        ),
+      },
       // {
       //   path: "facilities",
       //   element: (

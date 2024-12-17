@@ -8,4 +8,10 @@ export interface ICustomer {
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
+  user: {
+    id: string;
+    email: string;
+    role: string;
+    status: string;
+  };
 }

@@ -29,7 +29,11 @@ import {
 import { NavLink } from "react-router-dom";
 import user_photo from "../../assets/icons/user.png";
 import userRole from "@/constants/userRole";
-import { CustomerSidebarMenus } from "./SidebarMenus/SidebarMenus";
+import {
+  AdminSidebarMenus,
+  CustomerSidebarMenus,
+  VendorSidebarMenus,
+} from "./SidebarMenus/SidebarMenus";
 
 const DashboardLayout = () => {
   const auth = useAppSelector(selectAuth);
@@ -55,20 +59,21 @@ const DashboardLayout = () => {
             </div>
             {/* nav menu */}
             <div className="flex-1">
-              <nav className="grid items-start gap-2 font-medium">
+              <nav className="grid items-start gap-1 font-medium">
                 <NavLink
                   to="/dashboard/index"
                   className={({ isActive, isPending }) =>
                     isPending
                       ? "pending"
                       : isActive
-                      ? "flex items-center gap-3 rounded-lg px-3 py-2 bg-muted text-primary transition-all hover:text-primary"
-                      : "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                      ? "flex items-center gap-3 rounded-lg px-3 py-2 bg-primary text-white transition-all"
+                      : "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-muted hover:text-primary"
                   }
                 >
                   <Home className="size-5" />
                   Dashboard
                 </NavLink>
+                {/* menus for customer */}
                 <div className="flex flex-col gap-2">
                   {user?.role === userRole.CUSTOMER &&
                     CustomerSidebarMenus.map((item, idx) => (
@@ -79,8 +84,48 @@ const DashboardLayout = () => {
                           isPending
                             ? "pending"
                             : isActive
-                            ? "flex items-center gap-3 rounded-lg px-3 py-2 bg-muted text-primary transition-all hover:text-primary"
-                            : "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                            ? "flex items-center gap-3 rounded-lg px-3 py-2 bg-primary text-white transition-all"
+                            : "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-muted hover:text-primary"
+                        }
+                      >
+                        {item.icon}
+                        {item.title}
+                      </NavLink>
+                    ))}
+                </div>
+                {/* menus for admin */}
+                <div className="flex flex-col gap-2">
+                  {user?.role === userRole.ADMIN &&
+                    AdminSidebarMenus.map((item, idx) => (
+                      <NavLink
+                        to={item.path}
+                        key={idx}
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending"
+                            : isActive
+                            ? "flex items-center gap-3 rounded-lg px-3 py-2 bg-primary text-white transition-all"
+                            : "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-muted hover:text-primary"
+                        }
+                      >
+                        {item.icon}
+                        {item.title}
+                      </NavLink>
+                    ))}
+                </div>
+                {/* menus for vendor */}
+                <div className="flex flex-col gap-2">
+                  {user?.role === userRole.VENDOR &&
+                    VendorSidebarMenus.map((item, idx) => (
+                      <NavLink
+                        to={item.path}
+                        key={idx}
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending"
+                            : isActive
+                            ? "flex items-center gap-3 rounded-lg px-3 py-2 bg-primary text-white transition-all"
+                            : "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-muted hover:text-primary"
                         }
                       >
                         {item.icon}

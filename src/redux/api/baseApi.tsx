@@ -21,6 +21,7 @@ export const baseApi = createApi({
     "Products",
     "Categories",
     "Orders",
+    "Users",
     "Admins",
     "Vendors",
     "Customers",
