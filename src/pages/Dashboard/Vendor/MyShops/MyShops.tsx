@@ -3,6 +3,7 @@ import { useGetVendorShopsQuery } from "@/redux/features/shop/shopApi";
 import { IShop } from "@/types/TShop";
 import { UpdateShopDialogue } from "./EditShop";
 import { Loader2 } from "lucide-react";
+import { AddShopDialogue } from "./AddShop";
 
 const MyShops = () => {
   const { data } = useGetProfileQuery(undefined);
@@ -11,9 +12,18 @@ const MyShops = () => {
   const { data: shopData, isFetching } = useGetVendorShopsQuery(vendor?.id);
   const shop = shopData?.data[0] as IShop;
 
+  // display loading
+  if (isFetching) {
+    return (
+      <section className="flex justify-center items-center gap-8 py-16">
+        <Loader2 className="animate-spin" />
+      </section>
+    );
+  }
+
   return (
     <div>
-      {!isFetching ? (
+      {shop && (
         <section className="flex flex-col md:flex-row gap-8 p-6 border rounded-lg">
           <div className="border p-4 rounded-lg">
             <img src={shop?.logoUrl} alt="shop" className="max-w-48" />
@@ -41,9 +51,15 @@ const MyShops = () => {
             <UpdateShopDialogue shop={shop} />
           </div>
         </section>
-      ) : (
-        <section className="flex justify-center items-center gap-8 py-16">
-          <Loader2 className="animate-spin" />
+      )}
+      {!shop && (
+        <section className="flex flex-col items-center gap-8 p-6 border rounded-lg">
+          <div className="text-center space-y-4">
+            <h1 className="text-xl font-medium text-zinc-700">
+              You haven't created any shop yet!
+            </h1>
+            <AddShopDialogue />
+          </div>
         </section>
       )}
     </div>
