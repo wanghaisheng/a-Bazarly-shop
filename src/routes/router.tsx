@@ -24,7 +24,8 @@ import ForgotPassword from "@/pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "@/pages/ResetPassword/ResetPassword";
 import Dashboard from "@/pages/Dashboard/Shared/Dashboard";
 import MyOrders from "@/pages/Dashboard/Customer/MyOrders/MyOrders";
-import Customers from "@/pages/Dashboard/Customer/Admin/Customers/Customers";
+import Customers from "@/pages/Dashboard/Admin/Customers/Customers";
+import MyShops from "@/pages/Dashboard/Vendor/MyShops/MyShops";
 
 const router = createBrowserRouter([
   {
@@ -150,14 +151,14 @@ const router = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
-      // {
-      //   path: "facilities",
-      //   element: (
-      //     <ProtectedRoutes role="admin">
-      //       <AdminFacilities />
-      //     </ProtectedRoutes>
-      //   ),
-      // },
+      {
+        path: "my-shops",
+        element: (
+          <ProtectedRoutes role={userRole.VENDOR}>
+            <MyShops />
+          </ProtectedRoutes>
+        ),
+      },
       // {
       //   path: "add-facility",
       //   element: (

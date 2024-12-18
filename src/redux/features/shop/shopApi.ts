@@ -15,7 +15,7 @@ const shopApi = baseApi.injectEndpoints({
       invalidatesTags: ["Shops"],
     }),
     updateShop: builder.mutation({
-      query: ({ payload, id }) => {
+      query: ({ id, payload }) => {
         return {
           url: `/shops/${id}`,
           method: "PATCH",
@@ -51,7 +51,7 @@ const shopApi = baseApi.injectEndpoints({
       providesTags: ["Shops"],
     }),
     getVendorShops: builder.query({
-      query: ({ vendorId }) => ({
+      query: (vendorId) => ({
         url: `/shops/vendor-shops/${vendorId}`,
         method: "GET",
       }),
