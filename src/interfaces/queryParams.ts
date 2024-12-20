@@ -28,7 +28,7 @@ export interface IReviewQueryParams
   limit?: number;
   sortBy?: string;
   sortOrder?: string;
-  shopId?: string;
+  vendorEmail?: string;
 }
 
 export interface IShopQueryParams

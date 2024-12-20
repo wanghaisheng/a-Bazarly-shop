@@ -27,6 +27,7 @@ import MyOrders from "@/pages/Dashboard/Customer/MyOrders/MyOrders";
 import Customers from "@/pages/Dashboard/Admin/Customers/Customers";
 import MyShops from "@/pages/Dashboard/Vendor/MyShops/MyShops";
 import MyProducts from "@/pages/Dashboard/Vendor/MyProducts/MyProducts";
+import ShopReviews from "@/pages/Dashboard/Vendor/ShopReviews/ShopReviews";
 
 const router = createBrowserRouter([
   {
@@ -165,6 +166,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoutes role={userRole.VENDOR}>
             <MyProducts />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "shop-reviews",
+        element: (
+          <ProtectedRoutes role={userRole.VENDOR}>
+            <ShopReviews />
           </ProtectedRoutes>
         ),
       },
