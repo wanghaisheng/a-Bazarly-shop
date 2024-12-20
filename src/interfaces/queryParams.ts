@@ -49,3 +49,15 @@ export interface ICouponQueryParams
   startTime?: string;
   endTime?: string;
 }
+
+export interface IOrderQueryParams
+  extends Record<string, string | number | undefined> {
+  searchTerm?: string;
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: string;
+  status?: string;
+  paymentStatus?: string;
+  paymentType?: string;
+}

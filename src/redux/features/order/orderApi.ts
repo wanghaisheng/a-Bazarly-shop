@@ -1,4 +1,6 @@
+import generateQueryString from "@/utils/generateQueryString";
 import { baseApi } from "../../api/baseApi";
+import { IOrderQueryParams } from "@/interfaces/queryParams";
 
 const orderApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -70,8 +72,8 @@ const orderApi = baseApi.injectEndpoints({
       providesTags: ["Orders"],
     }),
     getShopOrders: builder.query({
-      query: (query: string) => ({
-        url: `/orders/shop-orders${query}`,
+      query: (query: IOrderQueryParams) => ({
+        url: `/orders/shop-orders?${generateQueryString(query)}`,
         method: "GET",
       }),
       providesTags: ["Orders"],
