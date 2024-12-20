@@ -1,6 +1,7 @@
 import { IProductQueryParams } from "@/interfaces/queryParams";
 import { baseApi } from "../../api/baseApi";
 import generateQueryString from "@/utils/generateQueryString";
+import { IProduct } from "@/types/TProduct";
 
 const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,7 +16,7 @@ const productApi = baseApi.injectEndpoints({
       invalidatesTags: ["Products"],
     }),
     duplicateProduct: builder.mutation({
-      query: (payload) => {
+      query: (payload: Partial<IProduct>) => {
         return {
           url: `/products/duplicate`,
           method: "POST",

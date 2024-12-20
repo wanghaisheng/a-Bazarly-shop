@@ -4,7 +4,7 @@ export interface IProductQueryParams
   category?: string;
   minPrice?: number;
   maxPrice?: number;
-  shopId?: string;
+  vendorEmail?: string;
   userEmail?: string;
   page?: number;
   limit?: number;

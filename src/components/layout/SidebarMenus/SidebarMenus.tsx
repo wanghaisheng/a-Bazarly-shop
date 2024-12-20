@@ -55,7 +55,7 @@ export const VendorSidebarMenus = [
   },
   {
     title: "Products",
-    path: "/dashboard/products",
+    path: "/dashboard/shop-products",
     icon: <ShoppingCart size={20} />,
   },
   {
