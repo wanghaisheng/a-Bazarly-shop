@@ -1,12 +1,12 @@
-# Game Spaces
+# Bazarly
 
 ## Introduction
 
-**Game Spaces** is a sports booking platform.
+**Bazarly** is a modern and scalable e-commerce platform that provides a seamless shopping experience for customers, efficient shop management for vendors, and powerful tools for administrators to oversee operations. With advanced features like product filtering, flash sales, and vendor following. Bazarly redefines online shopping.
 
 ## Project Description
 
-**Game Spaces** allows users to book sports facilities with ease and provides admins the ability to manage these facilities and bookings. Users can book sports facilities online with ease! From courts to fields, find and reserve the perfect space for their next game or event!
+**Bazarly** enables customers to browse and purchase products from various vendors effortlessly. Vendors can manage their shops, products, and orders through an intuitive dashboard. Admins have complete control to manage users, vendors, and products. The platform is built with scalability and performance in mind, offering a robust and responsive e-commerce solution.
 
 ### [Live Site](https://bazarly.vercel.app)
 
@@ -16,46 +16,68 @@ https://bazarly.vercel.app
 
 ## Features
 
-- **User Authentication and Authorization:**
-  Users can sign up and log in using their email and password. Admins have additional powers for managing facilities and bookings.
+### Customer Features
 
-- **Booking System:**
-  Users can book facilities by specifying the date, start time, and end time. The system calculates the payable amount based on the duration of the booking.
+- **User Authentication:**
+  Securely sign up and log in with email and password.
 
-- **Availability Checking:**
-  Users can check the availability of facilities for a specific date.
+- **Browse Products:** Explore a wide range of products across    multiple categories.
 
-- **Booking Cancellation:**
-  Users have the ability to cancel their bookings.
+- **Advanced Filtering:** Filter products by category, price range, and other attributes.
 
-- **View Bookings:**
-  Admins can view all bookings, while users can view only their own bookings. This helps in managing and tracking reservations efficiently.
+- **Follow Vendors:** Follow your favorite vendors to prioritize their products in your feed.
 
-- **Facility Management:**
-  Admins can create, update, and delete facilities. Each facility has details like name, description, price per hour, and location.
+- **Flash Sales:** Access exclusive discounts during time-limited flash sales.
 
-- **Error Handling:**
-  Comprehensive error handling ensures proper responses and messages for validation errors, duplicate entries, and not found routes.
+- **Cart Management:** Add products to your cart and proceed to checkout. The cart supports products from one vendor at a time.
 
-- **Authentication Middleware:**
-  Middleware is implemented to protect routes, ensuring that only authenticated users and admins can access their respective routes.
+- **Product Comparison:** Compare up to three products based on attributes like price, category, and ratings.
 
-- **Security:**
-  Powerful security system is implemented to protect routes and ensure that only authorized users and admins can access their respective routes.
+- **Order History:** View a detailed history of past orders and their statuses.
 
-- **Maintainable Codebase:**
-  The codebase is written with clean, well-organized, and documented coding practices. Followed by the industry standard, the codebase is written in structured and organized way.
+- **Product Reviews:** Leave reviews and ratings for purchased products.
+
+### Vendor Features
+
+- **Vendor Dashboard:** Manage shop details, inventory, and orders from a centralized dashboard.
+
+- **Product Management:** Add, edit, duplicate, and delete products with attributes like name, price, images, and discounts.
+
+- **Order Tracking:** Track orders and manage inventory in real-time.
+
+- **Customer Feedback:** View and respond to customer reviews.
+
+### Admin Features
+
+- **Admin Dashboard:** Monitor and control platform activities, including users and vendor shops.
+
+- **User and Vendor Management:** Approve, suspend, or delete user and vendor accounts.
+
+- **Product Categories:** Dynamically add, edit, or remove product categories.
+
+- **Transaction Monitoring:** Oversee all transactions and booking activities.
+
 
 ## Technology Stack
 
-- React
-- Redux
+### Frontend
+
 - TypeScript
+- React.js
+- Redux Toolkit
+- Redux RTK Query
+- Shadcn UI
+- Tailwind CSS
+
+### Backend
+
 - Node.js
 - Express.js
-- MongoDB
-- Mongoose
-- Shadcn UI
+- Prisma ORM
+- PostgreSQL (database)
+- Cloudinary (for image storage)
+- Aamarpay (for payments)
+- JWT (for authorization)
 
 ## Installation Guideline
 
@@ -66,40 +88,78 @@ Follow the instructions given below to install and run the project locally.
 - Node.js
 - Code Editor (E.g. Visual Studio Code)
 
-### Installation Steps
+### Steps to Install
 
 1. **Clone the Repository:**
 
-   ```base
+   ```bash
    git clone https://github.com/Rahad-Ullah/bazarly-client.git
    ```
 
-2. **Open in a Code Editor:**
-   Open the directory in a code editor like VS Code.
+2. **Navigate to the Client Directory:**
+    ```bash
+    cd bazarly-client
+    ```
+   
 3. **Install Dependencies:**
 
-   ```markdown
+   ```bash
    npm install
    ```
 
-4. **Run the project:**
+4. **Run the Frontend:**
 
-   ```markdown
+   ```bash
    npm run dev
    ```
+5. **Clone the Backend Repository:**
+  
+    ```bash
+    git clone https://github.com/Rahad-Ullah/bazarly-server.git
+    ```
+6. **Navigate to the Server Directory:**
 
-### Configuration
+    ```bash
+    cd bazarly-server
+    ```
+7. **Install Dependencies:**
 
-1. Create a `.env.local` file in the root directory of the project.
-2. Add these configuration variables in the `.env.local` file.
-   Example:
-   ```bash
-    PORT=5173
-    VITE_GOOGLE_MAP_API_KEY=your_google_map_api_key
-   ```
+    ```bash
+    npm install
+    ```
+
+8. **Set Up Environment Variables:** Create a `.env` file in the server root directory and add the following:
+
+    ```bash
+    DATABASE_URL=your_postgresql_database_url
+    CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+    CLOUDINARY_API_KEY=your_cloudinary_api_key
+    CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+    JWT_SECRET=your_jwt_secret
+    ```
+
+9. **Run the Backend:**
+
+    ```bash
+    npm run dev
+    ```
+
+10. **Access the Application: Open your browser and go to:**
+
+    ```bash
+    http://localhost:5173
+    ```
 
 ## Usage
 
-Browse the website in your browser and get the full experience.
+ **For Customers:**
+  - Browse products, filter categories, and add items to your cart.
+  - Checkout using Aamarpay.
 
-## Happy Coding 😎
+2. **For Vendors:**
+  - Manage your shop and inventory through the vendor dashboard.
+
+3. **For Admins:**
+  - Oversee platform operations and manage users and vendors from the admin dashboard.
+
+## Happy Shopping! 🛍️
