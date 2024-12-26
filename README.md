@@ -8,10 +8,10 @@
 
 **Bazarly** enables customers to browse and purchase products from various vendors effortlessly. Vendors can manage their shops, products, and orders through an intuitive dashboard. Admins have complete control to manage users, vendors, and products. The platform is built with scalability and performance in mind, offering a robust and responsive e-commerce solution.
 
-### [Live Site](https://bazarly.vercel.app)
+### [Live Site](https://bazarly-client.vercel.app)
 
 ```base
-https://bazarly.vercel.app
+https://bazarly-client.vercel.app
 ```
 
 ## Features
@@ -93,12 +93,12 @@ Follow the instructions given below to install and run the project locally.
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/Rahad-Ullah/bazarly-client.git
+   git clone https://github.com/Rahad-Ullah/Bazarly.git
    ```
 
 2. **Navigate to the Client Directory:**
     ```bash
-    cd bazarly-client
+    cd bazarly
     ```
    
 3. **Install Dependencies:**
