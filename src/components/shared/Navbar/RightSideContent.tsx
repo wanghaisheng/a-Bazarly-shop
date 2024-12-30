@@ -11,38 +11,60 @@ import {
 import { logOut, selectAuth } from "@/redux/features/auth/AuthSlice";
 import { selectCartProducts } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { ShoppingCart, User } from "lucide-react";
+import { History, Repeat, ShoppingCart, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import user_photo from "../../../assets/icons/user.png";
+import { selectComparisonProducts } from "@/redux/features/comparison/comparisonSlice";
 
 const RightSideContent = () => {
   const user = useAppSelector(selectAuth);
   const cart = useAppSelector(selectCartProducts);
+  const comparisonItems = useAppSelector(selectComparisonProducts);
 
   const dispatch = useAppDispatch();
 
   return (
-    <div className="flex items-center gap-4">
-      <Link to={"/cart"} className="">
-        <Button
-          variant={"outline"}
-          className="text-base border-2 border-primary text-primary relative"
+    <div className="flex items-center gap-5">
+      <Link
+        to={"/cart"}
+        className="flex items-center gap-2 text-white hover:text-zinc-200 font-semibold transition-all relative"
+      >
+        <ShoppingCart size={28} />
+        <Badge
+          variant="secondary"
+          className="absolute -top-3 -right-2 rounded-full bg-white px-1.5"
         >
-          <ShoppingCart />
-          {cart.length > 0 && (
-            <Badge
-              variant="secondary"
-              className="absolute -top-3 -left-2 rounded-full bg-primary px-2"
-            >
-              {cart.length}
-            </Badge>
-          )}
-        </Button>
+          {cart.length}
+        </Badge>
+      </Link>
+      <Link
+        to={"/recent-products"}
+        className="hidden lg:flex items-center gap-2 text-white hover:text-zinc-200 font-semibold transition-all"
+      >
+        <History size={28} className="overflow-hidden rounded-full" />
+        <div>
+          <p className="text-xs">Recent</p>
+          <p className="text-sm font-bold">Viewed</p>
+        </div>
+      </Link>
+      <Link
+        to={"/compare-products"}
+        className="hidden lg:flex items-center gap-2 text-white hover:text-zinc-200 font-semibold transition-all relative"
+      >
+        <Repeat size={28} />
+        {comparisonItems.length > 0 && (
+          <Badge
+            variant="secondary"
+            className="absolute -top-3 -right-2 rounded-full bg-white px-1.5"
+          >
+            {comparisonItems.length}
+          </Badge>
+        )}
       </Link>
       {user.accessToken ? (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            {user?.user ? (
+            {user?.user && (
               <Button
                 variant="outline"
                 className="overflow-hidden rounded-full size-10 p-0 hover:border-primary"
@@ -51,13 +73,6 @@ const RightSideContent = () => {
                   src={user_photo}
                   className="overflow-hidden rounded-full"
                 />
-              </Button>
-            ) : (
-              <Button
-                variant="outline"
-                className="overflow-hidden rounded-full size-10 p-2"
-              >
-                <User size={24} className="overflow-hidden rounded-full" />
               </Button>
             )}
           </DropdownMenuTrigger>
@@ -86,18 +101,15 @@ const RightSideContent = () => {
         </DropdownMenu>
       ) : (
         <div className="flex items-center gap-1">
-          {/* <Link to={"/sign-up"} className="hidden lg:block">
-              <Button
-                variant={"ghost"}
-                className="text-base relative flex items-center gap-2"
-              >
-                Sign up
-              </Button>
-            </Link> */}
-          <Link to={"/login"}>
-            <Button className="text-base relative flex items-center gap-2">
-              Login
-            </Button>
+          <Link
+            to={"/login"}
+            className="flex items-center gap-2 text-white hover:text-zinc-200 font-semibold transition-all"
+          >
+            <User size={28} className="overflow-hidden rounded-full" />
+            <div className="hidden md:block">
+              <p className="text-xs">Sign In</p>
+              <p className="text-sm font-bold">Account</p>
+            </div>
           </Link>
         </div>
       )}

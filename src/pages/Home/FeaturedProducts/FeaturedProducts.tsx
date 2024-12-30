@@ -20,6 +20,7 @@ import { TCategory } from "@/types/TCategory";
 // import SectionHeader from "@/components/shared/sectionHeader";
 import { useAppSelector } from "@/redux/hook";
 import { selectCurrentUser } from "@/redux/features/auth/AuthSlice";
+import SectionHeading from "@/components/shared/SectionHeader";
 
 const FeaturedProducts = () => {
   const [search, setSearch] = useState("");
@@ -85,10 +86,10 @@ const FeaturedProducts = () => {
       <Container>
         <div className="space-y-8">
           {/* section header */}
-          {/* <SectionHeader
+          <SectionHeading
             heading="Featured Products"
             subHeading="Shop the latest trends and unbeatable deals today!"
-          /> */}
+          />
 
           {/* Search space */}
           <div className="flex justify-center items-center">

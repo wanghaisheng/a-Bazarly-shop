@@ -1,6 +1,6 @@
 import LeftSideContent from "./LeftSideContent";
 import MegaMenuBar from "./MegaMenuBar";
-import MidNavMenu from "./MidNavMenu";
+import NavSearchBar from "./NavSearchBar";
 import RightSideContent from "./RightSideContent";
 
 const Navbar = () => {
@@ -11,7 +11,7 @@ const Navbar = () => {
         <LeftSideContent />
 
         {/* Nav menus */}
-        <MidNavMenu />
+        <NavSearchBar />
 
         {/* Right side menu items */}
         <RightSideContent />

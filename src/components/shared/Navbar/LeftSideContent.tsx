@@ -26,7 +26,7 @@ const LeftSideContent = () => {
       <Sheet>
         <SheetTrigger asChild>
           <Button
-            variant="outline"
+            variant="default"
             size="icon"
             className="lg:hidden"
             onClick={toggleSidebar}
