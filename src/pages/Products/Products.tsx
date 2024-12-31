@@ -23,7 +23,9 @@ import CustomPagination from "@/components/shared/Pagination";
 const AllProducts = () => {
   const [params] = useSearchParams();
   const categoryQuery = params.get("category") || "";
+  const searchQuery = params.get("search") || "";
   const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(Number.MAX_SAFE_INTEGER);
@@ -32,6 +34,7 @@ const AllProducts = () => {
   const { data: categories } = useGetAllCategoriesQuery({});
 
   const { data, isFetching } = useGetAllProductsQuery({
+    searchTerm,
     category,
     sortBy: "price",
     sortOrder: sort,
@@ -40,6 +43,13 @@ const AllProducts = () => {
   });
   const products = data?.data;
   const pages = Math.ceil(data?.meta?.total / data?.meta?.limit);
+
+  // Sync searchTerm state with query param changes
+  useEffect(() => {
+    if (searchQuery !== searchTerm) {
+      setSearchTerm(searchQuery);
+    }
+  }, [searchQuery, searchTerm]);
 
   // Sync category state with query param changes
   useEffect(() => {
@@ -109,7 +119,11 @@ const AllProducts = () => {
           <section className="lg:col-span-3 flex-1 space-y-1">
             <div className="flex justify-between items-center gap-4 bg-white p-4 rounded-lg shadow-sm">
               <h1 className="text-2xl font-bold text-gray-800">
-                {category ? `All ${category}s` : "All Products"}
+                {searchTerm
+                  ? `Search results for - ${searchTerm}`
+                  : category
+                  ? `All ${category}s`
+                  : "All Products"}
               </h1>
               {/* sorting */}
               <Select onValueChange={(value) => setSort(value)}>

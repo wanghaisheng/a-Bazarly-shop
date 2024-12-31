@@ -1,10 +1,11 @@
 import {
-  CircleDollarSign,
+  Mails,
   Receipt,
   ShoppingCart,
   Star,
   Store,
   Tags,
+  Ticket,
   Users,
   UsersRound,
 } from "lucide-react";
@@ -31,15 +32,25 @@ export const AdminSidebarMenus = [
     icon: <Tags size={20} />,
   },
   {
-    title: "Reviews",
-    path: "/dashboard/reviews",
-    icon: <Star size={20} />,
+    title: "Coupons",
+    path: "/dashboard/coupons",
+    icon: <Ticket size={20} />,
   },
   {
-    title: "Payments",
-    path: "/dashboard/payments",
-    icon: <CircleDollarSign size={20} />,
+    title: "Newsletters",
+    path: "/dashboard/newsletters",
+    icon: <Mails size={20} />,
   },
+  // {
+  //   title: "Reviews",
+  //   path: "/dashboard/reviews",
+  //   icon: <Star size={20} />,
+  // },
+  // {
+  //   title: "Payments",
+  //   path: "/dashboard/payments",
+  //   icon: <CircleDollarSign size={20} />,
+  // },
 ];
 
 export const VendorSidebarMenus = [
@@ -63,12 +74,27 @@ export const VendorSidebarMenus = [
     path: "/dashboard/shop-reviews",
     icon: <Star size={20} />,
   },
+  {
+    title: "Followers",
+    path: "/dashboard/shop-followers",
+    icon: <UsersRound size={20} />,
+  },
 ];
 
 export const CustomerSidebarMenus = [
   {
     title: "My Orders",
     path: "/dashboard/my-orders",
-    icon: <Receipt size={20} />,
+    icon: <ShoppingCart size={20} />,
+  },
+  {
+    title: "My Reviews",
+    path: "/dashboard/my-reviews",
+    icon: <Star size={20} />,
+  },
+  {
+    title: "Followed Shops",
+    path: "/dashboard/my-followed-shops",
+    icon: <Store size={20} />,
   },
 ];

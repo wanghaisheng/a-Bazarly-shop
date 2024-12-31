@@ -4,9 +4,10 @@ import { useGetAllProductsQuery } from "@/redux/features/product/productApi";
 import { IProduct } from "@/types/TProduct";
 import { Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavSearchBar = () => {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [isSearchResultsVisible, setIsSearchResultsVisible] = useState(false);
   const searchResultsRef = useRef<HTMLDivElement>(null);
@@ -33,16 +34,28 @@ const NavSearchBar = () => {
   });
   const products = productsData?.data;
 
+  // handle search submit
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSearchResultsVisible(false);
+    // setSearch("");
+    navigate(`/products?search=${search}`);
+  };
+
   return (
     <div className="relative">
       <div className="hidden md:flex justify-center items-center">
-        <div
+        <form
+          onSubmit={handleSearchSubmit}
           tabIndex={0}
           className="flex flex-col md:flex-row w-full md:w-screen md:max-w-sm lg:max-w-md xl:max-w-2xl items-center p-1 bg-white rounded-lg"
         >
           <Input
             onChange={(e) => setSearch(e.target.value)}
+            onChangeCapture={() => setIsSearchResultsVisible(true)}
             onFocus={() => setIsSearchResultsVisible(true)}
+            onFocusCapture={() => setIsSearchResultsVisible(true)}
+            onClick={() => setIsSearchResultsVisible(true)}
             type="search"
             placeholder="Search everything in Bazarly"
             value={search}
@@ -56,12 +69,14 @@ const NavSearchBar = () => {
           >
             <Search />
           </Button>
-        </div>
+        </form>
       </div>
+
+      {/* search result display */}
       {products?.length > 0 && isSearchResultsVisible && (
         <div
           ref={searchResultsRef}
-          className="p-3 bg-white rounded-lg shadow-lg border-t md:w-screen md:max-w-sm lg:max-w-md xl:max-w-2xl absolute"
+          className="p-3 bg-white rounded-lg shadow-lg border-t md:w-screen md:max-w-sm lg:max-w-md xl:max-w-2xl absolute max-h-80 overflow-y-scroll"
         >
           <div
             className={`${
