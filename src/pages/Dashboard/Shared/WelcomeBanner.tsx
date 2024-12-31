@@ -1,10 +1,10 @@
-import { selectCurrentUser } from "@/redux/features/auth/AuthSlice";
-import { useAppSelector } from "@/redux/hook";
 import { getToday } from "@/utils/getToday";
 import user_img from "@/assets/images/user1.png";
+import { useGetProfileQuery } from "@/redux/features/profile/profileApi";
 
 const WelcomeBanner = () => {
-  const user = useAppSelector(selectCurrentUser);
+  const { data } = useGetProfileQuery(undefined);
+  const userData = data?.data;
 
   const today = getToday();
 
@@ -14,7 +14,7 @@ const WelcomeBanner = () => {
         <p className="text-sm md:text-base">{today}</p>
         <div className="space-y-1">
           <h2 className="text-2xl md:text-3xl xl:text-4xl font-bold">
-            Welcome back, {user?.name}!
+            Welcome back, {userData?.name || ""}!
           </h2>
           <p className="text-sm md:text-base">
             Keep your profile updated to access the latest features.

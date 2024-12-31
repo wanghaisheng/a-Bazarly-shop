@@ -76,12 +76,12 @@ const Login = () => {
       password: "123456",
     });
   };
-  // const fillDemoVendorData = () => {
-  //   form.reset({
-  //     email: "vendor@gmail.com",
-  //     password: "123456",
-  //   });
-  // };
+  const fillDemoVendorData = () => {
+    form.reset({
+      email: "vendor@gmail.com",
+      password: "123456",
+    });
+  };
   const fillDemoAdminData = () => {
     form.reset({
       email: "admin@gmail.com",
@@ -107,7 +107,7 @@ const Login = () => {
               </p>
               <div className="flex justify-center gap-2">
                 <Button onClick={fillDemoUserData}>Customer</Button>
-                {/* <Button onClick={fillDemoVendorData}>Vendor</Button> */}
+                <Button onClick={fillDemoVendorData}>Vendor</Button>
                 <Button onClick={fillDemoAdminData}>Admin</Button>
               </div>
             </section>

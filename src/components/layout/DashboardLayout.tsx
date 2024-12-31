@@ -292,7 +292,9 @@ const DashboardLayout = () => {
                   <DropdownMenuItem>
                     <Link to={"/dashboard/index"}>Dashboard</Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link to={`/dashboard/profile`}>Profile</Link>
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={() => dispatch(logOut())}
