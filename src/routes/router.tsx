@@ -29,6 +29,7 @@ import MyShops from "@/pages/Dashboard/Vendor/MyShops/MyShops";
 import MyProducts from "@/pages/Dashboard/Vendor/MyProducts/MyProducts";
 import ShopReviews from "@/pages/Dashboard/Vendor/ShopReviews/ShopReviews";
 import ShopOrders from "@/pages/Dashboard/Vendor/ShopOrders/ShopOrders";
+import AllShops from "@/pages/AllShops/AllShops";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
             <Recent />
           </ProtectedRoutes>
         ),
+      },
+      {
+        path: "/shops",
+        element: <AllShops />,
       },
       {
         path: "/shops/:id",

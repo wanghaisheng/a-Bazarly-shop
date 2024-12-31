@@ -14,7 +14,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   const { id, name, image, price, discount } = product;
 
   return (
-    <Card className="border-none shadow-sm group">
+    <Card className="shadow-none hover:shadow-lg group">
       <Link to={`/products/${id}`}>
         <CardHeader className="pb-3">
           <img
