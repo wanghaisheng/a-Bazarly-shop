@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
 import { useAppDispatch } from "@/redux/hook";
 import { saveToAuth } from "@/redux/features/auth/AuthSlice";
+import loginImg from "../../assets/images/login.png";
 
 // form validation shema
 const formValidationSchema = z.object({
@@ -69,15 +70,47 @@ const Login = () => {
     }
   }
 
+  const fillDemoUserData = () => {
+    form.reset({
+      email: "customer@gmail.com",
+      password: "123456",
+    });
+  };
+  // const fillDemoVendorData = () => {
+  //   form.reset({
+  //     email: "vendor@gmail.com",
+  //     password: "123456",
+  //   });
+  // };
+  const fillDemoAdminData = () => {
+    form.reset({
+      email: "admin@gmail.com",
+      password: "123456",
+    });
+  };
+
   return (
     <div className=" py-14">
       <Container>
-        <div className="flex w-full justify-center items-center gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 w-full justify-between items-center gap-16">
+          <div className="hidden lg:block">
+            <img src={loginImg} alt="login" />
+          </div>
           {/* Login form */}
-          <div className="border rounded-2xl bg-white p-4 md:p-8 w-full md:w-1/2 lg:w-2/5">
+          <div className="border rounded-2xl bg-white p-4 md:p-8 w-full max-w-[420px] mx-auto">
             <CardTitle className="mb-8 font-bold text-2xl md:text-3xl text-center">
               Login
             </CardTitle>
+            <section className="pb-4 space-y-4">
+              <p className="text-sm font-semibold text-center">
+                Demo Credentials
+              </p>
+              <div className="flex justify-center gap-2">
+                <Button onClick={fillDemoUserData}>Customer</Button>
+                {/* <Button onClick={fillDemoVendorData}>Vendor</Button> */}
+                <Button onClick={fillDemoAdminData}>Admin</Button>
+              </div>
+            </section>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(handleLogin)}

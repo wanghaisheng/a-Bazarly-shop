@@ -9,7 +9,7 @@ import {
 import { addToCart } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch } from "@/redux/hook";
 import { IProduct } from "@/types/TProduct";
-import { CopyPlus, ShoppingCart } from "lucide-react";
+import { Eye, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
@@ -25,13 +25,13 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   };
 
   return (
-    <Card className="border-none shadow-sm group">
+    <Card className="border-none shadow-sm group flex flex-col justify-between">
       <Link to={`/products/${product?.id}`}>
         <CardHeader className="pb-3">
           <img
             src={product?.image}
             alt="product-image"
-            className="pb-2 object-cover w-full h-72 rounded-lg"
+            className="pb-2 object-cover w-full h-56 rounded-lg"
           />
           <CardTitle className="text-lg font-semibold text-zinc-900">
             {product?.name}
@@ -54,11 +54,13 @@ const ProductCard = ({ product }: { product: IProduct }) => {
           variant={"secondary"}
           className="w-full gap-2 text-primary group-hover:bg-primary group-hover:text-white"
         >
-          <ShoppingCart size={20} /> Buy Now
+          <ShoppingCart size={20} /> Add To Cart
         </Button>
-        <Button variant={"ghost"} className="w-full gap-2">
-          <CopyPlus size={20} /> Add to Compare
-        </Button>
+        <Link to={`/products/${product.id}`}>
+          <Button variant={"ghost"} className="w-full gap-2">
+            <Eye size={20} /> View Details
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );
