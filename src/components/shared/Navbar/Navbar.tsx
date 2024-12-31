@@ -2,11 +2,15 @@ import LeftSideContent from "./LeftSideContent";
 import MegaMenuBar from "./MegaMenuBar";
 import NavSearchBar from "./NavSearchBar";
 import RightSideContent from "./RightSideContent";
+import TopNavbar from "./TopNavbar";
 
 const Navbar = () => {
   return (
     <header>
-      <section className="flex h-16 md:h-20 w-full shrink-0 justify-between items-center px-4 md:px-6 shadow-sm lg:shadow-none sticky top-0 z-50 backdrop-blur-3xl bg-primary">
+      <section>
+        <TopNavbar />
+      </section>
+      <section className="flex h-16 md:h-20 w-full shrink-0 justify-between items-center px-4 md:px-6 lg:px-10 z-50 bg-primary">
         {/* Left side contents */}
         <LeftSideContent />
 
