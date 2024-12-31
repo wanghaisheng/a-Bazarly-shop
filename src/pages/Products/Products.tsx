@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
 import { TCategory } from "@/types/TCategory";
 import ProductCard from "./ProductUtils/ProductCard";
@@ -21,18 +21,13 @@ import { Label } from "@/components/ui/label";
 import CustomPagination from "@/components/shared/Pagination";
 
 const AllProducts = () => {
+  const [params] = useSearchParams();
+  const categoryQuery = params.get("category") || "";
   const [page, setPage] = useState(1);
   const [category, setCategory] = useState("");
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(99999999999999);
+  const [maxPrice, setMaxPrice] = useState(Number.MAX_SAFE_INTEGER);
   const [sort, setSort] = useState("asc");
-
-  // filter by category if specified
-  const [params] = useSearchParams();
-  const categoryQuery = params.get("category");
-  if (categoryQuery && !category) {
-    setCategory(categoryQuery as string);
-  }
 
   const { data: categories } = useGetAllCategoriesQuery({});
 
@@ -41,10 +36,23 @@ const AllProducts = () => {
     sortBy: "price",
     sortOrder: sort,
     minPrice,
-    maxPrice: maxPrice || 99999999999999,
+    maxPrice: maxPrice,
   });
   const products = data?.data;
   const pages = Math.ceil(data?.meta?.total / data?.meta?.limit);
+
+  // Sync category state with query param changes
+  useEffect(() => {
+    if (categoryQuery !== category) {
+      setCategory(categoryQuery);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoryQuery]);
+
+  // Update the product query when the category changes
+  useEffect(() => {
+    setPage(1); // Reset to the first page when category changes
+  }, [category]);
 
   return (
     <div className="py-8 bg-slate-100">
@@ -77,15 +85,9 @@ const AllProducts = () => {
               <div className="">
                 <RadioGroup
                   onValueChange={(value) => setCategory(value)}
-                  defaultValue="all"
+                  defaultValue={category}
                   className="gap-0"
                 >
-                  <div className="flex items-center space-x-2 py-2 cursor-pointer">
-                    <RadioGroupItem value="" id="all" />
-                    <Label htmlFor="all" className="w-full cursor-pointer">
-                      All Category
-                    </Label>
-                  </div>
                   {categories?.data?.map((item: TCategory) => (
                     <div
                       key={item.id}
@@ -106,7 +108,9 @@ const AllProducts = () => {
           </section>
           <section className="lg:col-span-3 flex-1 space-y-1">
             <div className="flex justify-between items-center gap-4 bg-white p-4 rounded-lg shadow-sm">
-              <h1 className="text-2xl font-bold text-gray-800">All Products</h1>
+              <h1 className="text-2xl font-bold text-gray-800">
+                {category ? `All ${category}s` : "All Products"}
+              </h1>
               {/* sorting */}
               <Select onValueChange={(value) => setSort(value)}>
                 <SelectTrigger className="w-[180px] bg-white">
