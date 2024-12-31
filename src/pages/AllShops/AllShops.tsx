@@ -3,9 +3,10 @@ import SectionHeading from "@/components/shared/SectionHeader";
 import { useGetAllShopsQuery } from "@/redux/features/shop/shopApi";
 import { IShop } from "@/types/TShop";
 import ShopCard from "./ShopCard";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const AllShops = () => {
-  const { data } = useGetAllShopsQuery({});
+  const { data, isFetching } = useGetAllShopsQuery({});
   const shops = data?.data;
 
   return (
@@ -20,6 +21,16 @@ const AllShops = () => {
             {shops?.map((item: IShop) => (
               <ShopCard key={item?.id} shop={item} />
             ))}
+            {/* showing skeleton when fetching */}
+            {isFetching &&
+              Array.from({ length: 4 }).map((_, idx) => (
+                <div key={idx} className="space-y-4">
+                  <Skeleton className="w-full h-40" />
+                  <Skeleton className="w-56 h-6" />
+                  <Skeleton className="w-full h-4" />
+                  <Skeleton className="w-full h-10" />
+                </div>
+              ))}
           </section>
         </div>
       </Container>
