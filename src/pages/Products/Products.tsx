@@ -2,8 +2,6 @@ import Container from "@/components/shared/Container";
 import { useGetAllProductsQuery } from "@/redux/features/product/productApi";
 import { IProduct } from "@/types/TProduct";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -17,12 +15,13 @@ import { useState } from "react";
 import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
 import { TCategory } from "@/types/TCategory";
 import ProductCard from "./ProductUtils/ProductCard";
-// import SectionHeader from "@/components/shared/sectionHeader";
 import { useSearchParams } from "react-router-dom";
-import SectionHeading from "@/components/shared/SectionHeader";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import CustomPagination from "@/components/shared/Pagination";
 
 const AllProducts = () => {
-  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
   const [category, setCategory] = useState("");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(99999999999999);
@@ -37,8 +36,7 @@ const AllProducts = () => {
 
   const { data: categories } = useGetAllCategoriesQuery({});
 
-  const { data, isFetching, refetch } = useGetAllProductsQuery({
-    searchTerm: search,
+  const { data, isFetching } = useGetAllProductsQuery({
     category,
     sortBy: "price",
     sortOrder: sort,
@@ -46,110 +44,119 @@ const AllProducts = () => {
     maxPrice: maxPrice || 99999999999999,
   });
   const products = data?.data;
+  const pages = Math.ceil(data?.meta?.total / data?.meta?.limit);
 
   return (
-    <div className="py-16 lg:py-20 bg-slate-50">
+    <div className="py-8 bg-slate-100">
       <Container>
-        <div className="space-y-8">
-          {/* section header */}
-          <SectionHeading
-            heading="All Our Products"
-            subHeading="Shop the latest trends and unbeatable deals today!"
-          />
-
-          {/* Search space */}
-          <div className="flex justify-center items-center">
-            <div
-              tabIndex={0}
-              className="flex flex-col md:flex-row gap-2 w-full max-w-xl items-center space-x-2 p-1 rounded-lg"
-            >
-              <Input
-                onChange={(e) => setSearch(e.target.value)}
-                type="search"
-                placeholder="Search here"
-              />
-              {/* select category */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <section className="lg:col-span-1 max-h-fit space-y-2">
+            <div className="bg-white shadow-sm p-4 rounded-lg">
+              <h1 className="text-xl font-semibold text-gray-900 mb-2">
+                Price Range
+              </h1>
               <div className="flex items-center gap-2">
-                <Select onValueChange={(value) => setCategory(value)}>
-                  <SelectTrigger className="w-[120px] bg-white">
-                    <SelectValue placeholder="Category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {categories?.data.map((item: TCategory) => (
-                        <SelectItem key={item.id} value={item?.name}>
-                          {item?.name}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Button onClick={refetch} type="submit" variant={"default"}>
-                  <Search />
-                </Button>
+                <Input
+                  onChange={(e) => setMinPrice(Number(e.target.value))}
+                  type="number"
+                  placeholder="Min price"
+                  className="max-w-36"
+                />
+                <Input
+                  onChange={(e) => setMaxPrice(Number(e.target.value))}
+                  type="number"
+                  placeholder="Max price"
+                  className="max-w-36"
+                />
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* price range and sorting */}
-        <div className="flex flex-wrap justify-center lg:justify-between items-center gap-2 my-6 mt-10">
-          <div className="flex items-center gap-2">
-            <Input
-              onChange={(e) => setMinPrice(Number(e.target.value))}
-              type="number"
-              placeholder="Min price"
-              className="max-w-36"
-            />
-            <Input
-              onChange={(e) => setMaxPrice(Number(e.target.value))}
-              type="number"
-              placeholder="Max price"
-              className="max-w-36"
-            />
-          </div>
-          {/* sorting */}
-          <Select onValueChange={(value) => setSort(value)}>
-            <SelectTrigger className="w-[180px] bg-white">
-              <SelectValue placeholder="Default Sorting" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="asc" defaultChecked>
-                  Price Low to High
-                </SelectItem>
-                <SelectItem value="desc">Price High to Low</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* data mapping */}
-        {isFetching ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-6 justify-between items-center mb-16">
-            {Array.from({ length: 8 }).map((_, index) => (
-              <div key={index} className="space-y-4">
-                <Skeleton className="h-52 w-full rounded-xl" />
-                <div className="space-y-4">
-                  <Skeleton className="h-4 w-10/12" />
-                  <Skeleton className="h-6 w-4/12" />
-                  <Skeleton className="h-4 w-5/12" />
-                  <Skeleton className="h-10 w-12/12" />
-                </div>
+            <div className="bg-white shadow-sm p-4 rounded-lg">
+              <h1 className="text-xl font-semibold text-gray-900 mb-2">
+                Categories
+              </h1>
+              <div className="">
+                <RadioGroup
+                  onValueChange={(value) => setCategory(value)}
+                  defaultValue="all"
+                  className="gap-0"
+                >
+                  <div className="flex items-center space-x-2 py-2 cursor-pointer">
+                    <RadioGroupItem value="" id="all" />
+                    <Label htmlFor="all" className="w-full cursor-pointer">
+                      All Category
+                    </Label>
+                  </div>
+                  {categories?.data?.map((item: TCategory) => (
+                    <div
+                      key={item.id}
+                      className="flex items-center space-x-2 py-2 cursor-pointer"
+                    >
+                      <RadioGroupItem value={item.name} id={item.name} />
+                      <Label
+                        htmlFor={item.name}
+                        className="w-full cursor-pointer"
+                      >
+                        {item.name}
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
               </div>
-            ))}
-          </div>
-        ) : products?.length ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
-            {products?.map((item: IProduct) => (
-              <ProductCard key={item?.id} product={item} />
-            ))}
-          </div>
-        ) : (
-          <h1 className="text-center text-lg text-gray-500 my-10">
-            No Data Found
-          </h1>
-        )}
+            </div>
+          </section>
+          <section className="lg:col-span-3 flex-1 space-y-1">
+            <div className="flex justify-between items-center gap-4 bg-white p-4 rounded-lg shadow-sm">
+              <h1 className="text-2xl font-bold text-gray-800">All Products</h1>
+              {/* sorting */}
+              <Select onValueChange={(value) => setSort(value)}>
+                <SelectTrigger className="w-[180px] bg-white">
+                  <SelectValue placeholder="Default Sorting" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="asc" defaultChecked>
+                      Price Low to High
+                    </SelectItem>
+                    <SelectItem value="desc">Price High to Low</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            {/* data mapping */}
+            {isFetching ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 justify-between items-center pt-2">
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <div key={index} className="space-y-4">
+                    <Skeleton className="h-52 w-full rounded-xl" />
+                    <div className="space-y-4">
+                      <Skeleton className="h-4 w-10/12" />
+                      <Skeleton className="h-6 w-4/12" />
+                      <Skeleton className="h-4 w-5/12" />
+                      <Skeleton className="h-10 w-12/12" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : products?.length ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 pt-2">
+                {products?.map((item: IProduct) => (
+                  <ProductCard key={item?.id} product={item} />
+                ))}
+              </div>
+            ) : (
+              <h1 className="text-center text-lg text-gray-500 pt-20">
+                No Data Found
+              </h1>
+            )}
+
+            {/* showing pagination */}
+            {products?.length > 0 && (
+              <div className="py-8 pt-12">
+                <CustomPagination pages={pages} page={page} setPage={setPage} />
+              </div>
+            )}
+          </section>
+        </div>
       </Container>
     </div>
   );
